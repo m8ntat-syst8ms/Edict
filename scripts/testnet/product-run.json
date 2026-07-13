@@ -1,0 +1,89 @@
+{
+  "version": "edict-native-testnet-product-1",
+  "generatedAt": "2026-07-12T17:30:58.528Z",
+  "network": "NEAR testnet",
+  "warning": "Engineering staging only: native NEAR, deterministic mock model seats and simulated independent signer operators. No customer funds.",
+  "deployment": {
+    "factory": "m2.edict-req-ggrb91.testnet",
+    "settlement": "protect.m2.edict-req-ggrb91.testnet",
+    "relayer": "edict-relay-ggrb91.testnet",
+    "settlementExplorer": "https://testnet.nearblocks.io/address/protect.m2.edict-req-ggrb91.testnet",
+    "factoryExplorer": "https://testnet.nearblocks.io/address/m2.edict-req-ggrb91.testnet",
+    "factoryAccessKeys": 0,
+    "settlementAccessKeys": 0
+  },
+  "services": {
+    "runtimeUrl": "http://127.0.0.1:4890",
+    "appUrl": "http://127.0.0.1:4885"
+  },
+  "flows": [
+    {
+      "kind": "accepted",
+      "protectionId": "b893768bf96e5aa624fbab83b7bad7507a954f673b487f0ec68a014fb9dc6e06",
+      "state": "settled",
+      "title": "Deliver the signed reconciliation report with the committed checksum.",
+      "transactions": {
+        "fund": {
+          "hash": "6KZmRetrsjSgZ85KwnyxK92aR8fNPa6xzcfQTsPC88uM",
+          "explorer": "https://testnet.nearblocks.io/txns/6KZmRetrsjSgZ85KwnyxK92aR8fNPa6xzcfQTsPC88uM"
+        },
+        "deliver": {
+          "hash": "Yv35FL8fSHU8mivwP783R4d99uBEPGx5eZgocJ1Foep",
+          "explorer": "https://testnet.nearblocks.io/txns/Yv35FL8fSHU8mivwP783R4d99uBEPGx5eZgocJ1Foep"
+        },
+        "accept": {
+          "hash": "13PfUZdzG8sFJKp2bpgrM82jLrQuGsyszYjb5ZjD74kL",
+          "explorer": "https://testnet.nearblocks.io/txns/13PfUZdzG8sFJKp2bpgrM82jLrQuGsyszYjb5ZjD74kL"
+        }
+      },
+      "relayTransactions": [
+        {
+          "method": "withdraw_claim",
+          "hash": "Dq7sJCbD8aJSCjR6x8jbAL5Ner6w6UYxT21jjGXV9Su3",
+          "explorer": "https://testnet.nearblocks.io/txns/Dq7sJCbD8aJSCjR6x8jbAL5Ner6w6UYxT21jjGXV9Su3"
+        }
+      ]
+    },
+    {
+      "kind": "disputed",
+      "protectionId": "559fc8ae49e21aa2da0cb0c9bd6d2c7b1b8f801ef7531c87bf5cc9ff4619b010",
+      "state": "settled",
+      "title": "Deliver the signed risk report with the exact committed checksum.",
+      "latestRuling": {
+        "kind": "requester_wins"
+      },
+      "transactions": {
+        "fund": {
+          "hash": "ACvHhp66xp1jqZWEPpp6M18P38HPmUJrqesoFQ3zNrLg",
+          "explorer": "https://testnet.nearblocks.io/txns/ACvHhp66xp1jqZWEPpp6M18P38HPmUJrqesoFQ3zNrLg"
+        },
+        "deliver": {
+          "hash": "GmGCErJ5gsotmkDTxfobeDrjLpLEj6B5FbhPNKt8PLTj",
+          "explorer": "https://testnet.nearblocks.io/txns/GmGCErJ5gsotmkDTxfobeDrjLpLEj6B5FbhPNKt8PLTj"
+        },
+        "openDispute": {
+          "hash": "6RkeZrYR2N9Ws65HHTan7KsvaD7htKnuy1W98K9uHcYe",
+          "explorer": "https://testnet.nearblocks.io/txns/6RkeZrYR2N9Ws65HHTan7KsvaD7htKnuy1W98K9uHcYe"
+        }
+      },
+      "relayTransactions": [
+        {
+          "method": "submit_ruling",
+          "hash": "3hSukXVWQQnmXP2MLCoScWLGiBk7psVHQeCZvMva4NKy",
+          "explorer": "https://testnet.nearblocks.io/txns/3hSukXVWQQnmXP2MLCoScWLGiBk7psVHQeCZvMva4NKy"
+        },
+        {
+          "method": "withdraw_claim",
+          "hash": "A8yMskugjiDgRJbUWwd2myvzwnFupTxBDtL5d4TFBn5B",
+          "explorer": "https://testnet.nearblocks.io/txns/A8yMskugjiDgRJbUWwd2myvzwnFupTxBDtL5d4TFBn5B"
+        }
+      ]
+    }
+  ],
+  "guarantees": {
+    "edictHoldsCustomerFunds": false,
+    "edictHoldsCustomerKeys": false,
+    "settlementContractHasAccessKeys": false,
+    "relayerCanRedirectPayouts": false
+  }
+}

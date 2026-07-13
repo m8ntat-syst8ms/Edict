@@ -1,0 +1,72 @@
+# Self-hosted Edict attested inference node.
+#
+# dstack app packaging: dstack takes this compose file AS-IS ("bring your
+# docker-compose.yaml as-is"); the CVM measures its hash (compose_hash in
+# `GET http://dstack/Info`), so EVERYTHING here is part of the attested
+# identity. Two consequences:
+#
+#   1. Pin the edict-node image BY DIGEST before deploying (build + push
+#      app/Dockerfile, then substitute image@sha256:…). A floating tag would
+#      make the measurement meaningless.
+#   2. The dstack guest agent socket /var/run/dstack.sock is mounted into the
+#      node container — that is the ONLY thing that distinguishes this from a
+#      plain compose app (per Dstack-TEE/dstack README).
+#
+# The model configuration is an example. Review and pin the exact model,
+# license, image digest, and compose measurement before deployment.
+
+services:
+  model:
+    # Official llama.cpp server image (CPU). Pin by digest before dstack deploy.
+    image: ghcr.io/ggml-org/llama.cpp:server
+    command: >
+      -hf ggml-org/gpt-oss-20b-GGUF
+      --host 0.0.0.0
+      --port 8000
+      --ctx-size 16384
+      --jinja
+      --no-webui
+    volumes:
+    # Cache model artifacts across restarts.
+      - model-cache:/root/.cache/llama.cpp
+    restart: unless-stopped
+    # NOT exposed to the host — only edict-node may reach the raw model
+    # server (an unsigned completion path would bypass the proof).
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://127.0.0.1:8000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 20
+      start_period: 30m # first boot downloads the model
+
+  edict-node:
+    # PRODUCTION: replace with the pushed digest, e.g.
+    #   image: docker.io/<org>/edict-dstack-node@sha256:<digest>
+    # (local dev convenience: `docker compose build` uses ./app)
+    image: edict-dstack-node:dev
+    build: ./app
+    environment:
+      EDICT_NODE_MODE: dstack            # real key derivation + real TDX quotes
+      EDICT_NODE_PORT: "8100"
+      LOCAL_MODEL_URL: http://model:8000/v1
+      EDICT_NODE_DATA_DIR: /data
+      EDICT_NODE_MODEL_ID: gpt-oss-20b   # reject mislabeled requests — the envelope must never lie
+      EDICT_NODE_UPSTREAM_TIMEOUT_MS: "180000"
+      DSTACK_KEY_PATH: edict/proof-signing
+      DSTACK_KEY_PURPOSE: edict-node-proof-signing-v1
+      # REQUIRED in dstack mode: bearer auth for all /v1/* endpoints. Set via
+      # dstack's encrypted env-var channel, never in this file:
+      # EDICT_NODE_API_KEY: <injected>
+    volumes:
+      - /var/run/dstack.sock:/var/run/dstack.sock # dstack guest agent (GetKey/GetQuote/Info)
+      - edict-node-data:/data                     # persistent signature store — NO expiry
+    ports:
+      - "8100:8100"
+    depends_on:
+      model:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  model-cache:
+  edict-node-data:

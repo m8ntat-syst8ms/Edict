@@ -1,0 +1,31 @@
+{
+  "name": "@edict/protection-runtime",
+  "version": "0.1.0",
+  "description": "Edict Protect's non-custodial event runtime, signed ingress, NEAR Intents observation and permissionless settlement relay orchestration",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "edict-protection-runtime": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\"",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@edict/arbiter": "*",
+    "@edict/core": "*",
+    "@edict/evidence": "*",
+    "@edict/near-deployer": "*",
+    "@edict/near-intents": "*",
+    "@edict/sdk": "*"
+  },
+  "devDependencies": {
+    "@noble/curves": "^2.2.0",
+    "@noble/hashes": "^2.2.0"
+  }
+}

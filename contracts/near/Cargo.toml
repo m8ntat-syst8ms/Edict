@@ -1,0 +1,31 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/edict-settlement-common",
+  "crates/edict-customer-settlement",
+  "crates/edict-deployment-factory",
+  "crates/edict-intents-settlement-common",
+  "crates/edict-customer-settlement-intents",
+  "crates/edict-intents-deployment-factory",
+  "crates/edict-global-publisher-test",
+]
+exclude = ["integration-tests"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "UNLICENSED"
+publish = false
+
+[workspace.dependencies]
+near-sdk = "5"
+
+# Release profile for wasm32 contract builds. Host-target tests ignore most of
+# these settings.
+[profile.release]
+codegen-units = 1
+opt-level = "z"
+lto = true
+debug = false
+panic = "abort"
+overflow-checks = true

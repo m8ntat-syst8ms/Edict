@@ -1,0 +1,10 @@
+{
+  "invoiceId": "INV-2026-0518-A",
+  "issuer": "Northgate Fulfilment Services Ltd",
+  "payer": "Relay Ops GmbH",
+  "description": "Vendor rollback and duplicate purchase-order reversal following the runaway procurement-agent incident of 2026-05-18 (policy pol-2026-1188, claim clm-2026-0042)",
+  "amountUsd": 15000,
+  "paidAtUnixMs": 1779148800000,
+  "settlementRef": "sepa:DE44-3704-0044-0532-7712",
+  "jobNonce": "om-c14-5b8c02"
+}

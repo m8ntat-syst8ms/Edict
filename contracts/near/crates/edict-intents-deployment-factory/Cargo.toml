@@ -1,0 +1,18 @@
+[package]
+name = "edict-intents-deployment-factory"
+description = "Adminless version-fixed factory for keyless Edict NEAR Intents settlement accounts"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+edict-intents-settlement-common = { path = "../edict-intents-settlement-common" }
+near-sdk = { workspace = true, features = ["unstable"] }
+
+[dev-dependencies]
+edict-settlement-common = { path = "../edict-settlement-common" }
+near-sdk = { workspace = true, features = ["unit-testing", "unstable"] }

@@ -1,0 +1,22 @@
+{
+  "name": "@edict/near-deployer",
+  "version": "0.0.1",
+  "description": "Keyless customer settlement deployment plans and on-chain conformance verification for NEAR",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "edict-near-deploy": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\""
+  },
+  "dependencies": {
+    "@edict/near-intents": "*",
+    "bs58": "^6.0.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "caseId": "d0c4e7a0-0005-4e01-8e01-000000000005",
+  "title": "Clean non-delivery (synthetic)",
+  "expected": {
+    "kind": "requester_wins"
+  },
+  "rationale": "Deterministic non-delivery: the mandate requires delivery exclusively via a committed venue manifest; no manifest exists and the authenticated venue log shows zero delivery events. The worker's unevidenced out-of-band email claim cannot discharge the delivery burden.",
+  "difficulty": "deterministic",
+  "tags": [
+    "synthetic",
+    "non_delivery"
+  ]
+}

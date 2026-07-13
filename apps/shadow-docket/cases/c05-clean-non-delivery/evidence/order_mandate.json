@@ -1,0 +1,45 @@
+{
+  "version": "edict-om-1",
+  "requester": {
+    "agentId": "near:menu-aggregator.near",
+    "principalKybRef": "kyb:v0:tablehop-bv"
+  },
+  "worker": {
+    "agentId": "near:scrapesmith.near",
+    "principalKybRef": "kyb:v0:scrapesmith-sole-trader"
+  },
+  "description": "Scrape and deliver a structured CSV of 1,200 restaurant menu records (fields: name, url, cuisine, price band, updated_at) for the Amsterdam metro area. Delivery exclusively via a committed delivery manifest on the venue.",
+  "acceptanceCriteria": [
+    {
+      "id": "AC-1",
+      "statement": "A delivery manifest must be committed on the venue before the deadline; out-of-band delivery does not count.",
+      "machineCheck": {
+        "kind": "deadline_before",
+        "params": {}
+      }
+    },
+    {
+      "id": "AC-2",
+      "statement": "CSV contains at least 1,200 rows with all five mandated fields populated."
+    }
+  ],
+  "priceUsd": 120,
+  "currency": {
+    "asset": "USDC",
+    "rail": "near-agent-market"
+  },
+  "deadlineUnixMs": 1777248000000,
+  "acceptanceWindowMs": 172800000,
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E0"
+  },
+  "permittedRulings": [
+    "requester_wins",
+    "worker_wins"
+  ],
+  "maeEvents": [],
+  "nonce": "om-c05-2ab9e4"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@edict/testnet-scripts",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Native NEAR testnet deployment and end-to-end product runner",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
+}

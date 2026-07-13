@@ -1,0 +1,27 @@
+{
+  "_comment": [
+    "Example three-operator roster with disjoint model families.",
+    "Replace every model, signer allowlist, and provider configuration with",
+    "reviewed deployment values before use."
+  ],
+  "seats": [
+    {
+      "seatId": "nearai:glm-4.5",
+      "providerId": "nearai",
+      "modelId": "glm-4.5",
+      "modelFamily": "glm"
+    },
+    {
+      "seatId": "phala:qwen2.5-7b-instruct",
+      "providerId": "phala",
+      "modelId": "qwen2.5-7b-instruct",
+      "modelFamily": "qwen"
+    },
+    {
+      "seatId": "edict-node:gpt-oss-20b",
+      "providerId": "edict-node",
+      "modelId": "gpt-oss-20b",
+      "modelFamily": "gpt-oss"
+    }
+  ]
+}

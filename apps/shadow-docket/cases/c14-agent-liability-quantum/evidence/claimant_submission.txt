@@ -1,0 +1,18 @@
+CLAIMANT SUBMISSION — claim clm-2026-0042 (Relay Ops GmbH)
+
+Coverage is conceded; this claim is about quantum only.
+
+Our loss is 50000 USD in total. First, 30000 USD of invoiced remediation:
+invoice A (vendor rollback and duplicate purchase-order reversal, 15000 USD)
+and invoice B (emergency inventory-data reconciliation and audit, 15000 USD),
+both paid and both hash-committed as authenticated payment evidence in this
+case. Those components should be uncontroversial.
+
+Second, 20000 USD of consequential loss: the margin lost while our
+procurement pipeline was frozen for nine days after the incident, plus the
+goodwill cost of delayed customer orders. We say clause 7.2 should be read
+narrowly. The lost margin was a direct and entirely foreseeable consequence
+of the covered incident — nothing about it is "indirect" in the ordinary
+sense of the word, and the exclusion should not swallow the cover.
+
+We claim the policy limit of 50000 USD.

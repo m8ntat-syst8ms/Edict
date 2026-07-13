@@ -1,0 +1,28 @@
+name: Contract Release Sandbox
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sandbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            contracts/near
+            contracts/near/integration-tests
+      - name: Install pinned Wasm validator
+        run: cargo install wasm-tools --version 1.245.1 --locked
+      - run: npm run test:sandbox

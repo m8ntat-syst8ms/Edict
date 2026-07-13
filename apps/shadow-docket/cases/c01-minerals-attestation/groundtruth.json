@@ -1,0 +1,15 @@
+{
+  "caseId": "d0c4e7a0-0001-4e01-8e01-000000000001",
+  "title": "Minerals-deal attestation (UMA whale-resolution adaptation)",
+  "expected": {
+    "kind": "requester_wins"
+  },
+  "rationale": "AC-1 requires a signed-instrument citation (SIGNED_INSTRUMENT_REF line) for an EXECUTED: YES conclusion. The delivered report cites only a press communiqué and an initialled, expressly non-binding MOU — AC-1 fails deterministically and the registry evidence shows no executed agreement by the deadline.",
+  "difficulty": "easy",
+  "tags": [
+    "real_dispute",
+    "oracle_manipulation",
+    "attestation"
+  ],
+  "historicalDivergence": "Adapted from the March 2025 UMA/Polymarket \"Ukraine minerals deal\" resolution (~$7M open interest), where a holder of concentrated oracle voting power pushed a YES resolution although no agreement had been executed by the market deadline. Groundtruth here is the evidence-supported outcome (no executed instrument), NOT the manipulated historical resolution."
+}

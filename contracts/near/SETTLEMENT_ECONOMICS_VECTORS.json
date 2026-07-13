@@ -1,0 +1,67 @@
+{
+  "version": "edict-settlement-economics-v1",
+  "principalAtomic": "1000003",
+  "bondAtomic": "50003",
+  "vectors": [
+    {
+      "name": "requester-disputant-requester-wins",
+      "requesterBps": 10000,
+      "disputant": "requester",
+      "requesterPrincipalAtomic": "1000003",
+      "workerPrincipalAtomic": "0",
+      "bondRefundAtomic": "50003",
+      "bondToCounterpartyAtomic": "0",
+      "bondToRemovalAtomic": "0"
+    },
+    {
+      "name": "requester-disputant-worker-wins-odd-residual",
+      "requesterBps": 0,
+      "disputant": "requester",
+      "requesterPrincipalAtomic": "0",
+      "workerPrincipalAtomic": "1000003",
+      "bondRefundAtomic": "0",
+      "bondToCounterpartyAtomic": "25001",
+      "bondToRemovalAtomic": "25002"
+    },
+    {
+      "name": "requester-disputant-split-2500",
+      "requesterBps": 2500,
+      "disputant": "requester",
+      "requesterPrincipalAtomic": "250000",
+      "workerPrincipalAtomic": "750003",
+      "bondRefundAtomic": "12500",
+      "bondToCounterpartyAtomic": "18751",
+      "bondToRemovalAtomic": "18752"
+    },
+    {
+      "name": "worker-disputant-split-2500",
+      "requesterBps": 2500,
+      "disputant": "worker",
+      "requesterPrincipalAtomic": "250000",
+      "workerPrincipalAtomic": "750003",
+      "bondRefundAtomic": "37502",
+      "bondToCounterpartyAtomic": "6250",
+      "bondToRemovalAtomic": "6251"
+    },
+    {
+      "name": "worker-disputant-requester-wins-odd-residual",
+      "requesterBps": 10000,
+      "disputant": "worker",
+      "requesterPrincipalAtomic": "1000003",
+      "workerPrincipalAtomic": "0",
+      "bondRefundAtomic": "0",
+      "bondToCounterpartyAtomic": "25001",
+      "bondToRemovalAtomic": "25002"
+    },
+    {
+      "name": "worker-disputant-worker-wins",
+      "requesterBps": 0,
+      "disputant": "worker",
+      "requesterPrincipalAtomic": "0",
+      "workerPrincipalAtomic": "1000003",
+      "bondRefundAtomic": "50003",
+      "bondToCounterpartyAtomic": "0",
+      "bondToRemovalAtomic": "0"
+    }
+  ]
+}

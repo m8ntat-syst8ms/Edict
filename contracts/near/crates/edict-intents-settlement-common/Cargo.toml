@@ -1,0 +1,17 @@
+[package]
+name = "edict-intents-settlement-common"
+description = "Shared immutable configuration for Edict NEAR Intents settlement artifacts"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+edict-settlement-common = { path = "../edict-settlement-common" }
+near-sdk = { workspace = true }
+
+[dev-dependencies]
+near-sdk = { workspace = true, features = ["unit-testing"] }

@@ -1,0 +1,6 @@
+hash-chain log excerpt (anchored head ab77…)
+[2026-04-27T10:02Z] worker: module-1.pkg delivered, checksum conform
+[2026-05-04T09:48Z] worker: module-2.pkg delivered, checksum conform
+[2026-05-04T15:30Z] requester: "programme cancelled for budget reasons — stop work on modules 3 and 4, effective immediately"
+[2026-05-04T15:44Z] worker: stop-work acknowledged; modules 3 and 4 not started beyond outline
+[2026-05-05T08:00Z] requester: dispute opened over escrow disposition

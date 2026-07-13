@@ -1,0 +1,22 @@
+{
+  "seats": [
+    {
+      "seatId": "nearai:glm-4.5",
+      "providerId": "nearai",
+      "modelId": "glm-4.5",
+      "modelFamily": "glm"
+    },
+    {
+      "seatId": "phala:qwen2.5-7b-instruct",
+      "providerId": "phala",
+      "modelId": "qwen2.5-7b-instruct",
+      "modelFamily": "qwen"
+    },
+    {
+      "seatId": "mock:gpt-oss-20b",
+      "providerId": "mock",
+      "modelId": "gpt-oss-20b",
+      "modelFamily": "gpt-oss"
+    }
+  ]
+}

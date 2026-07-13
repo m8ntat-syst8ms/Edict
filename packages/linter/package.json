@@ -1,0 +1,23 @@
+{
+  "name": "@edict/linter",
+  "version": "0.0.1",
+  "description": "Deterministic pre-funding analysis for Edict OrderMandates",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "edict-lint": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\""
+  },
+  "dependencies": {
+    "@edict/core": "*",
+    "@edict/evidence": "*",
+    "@edict/arbiter": "*"
+  }
+}

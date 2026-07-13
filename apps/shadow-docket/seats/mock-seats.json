@@ -1,0 +1,20 @@
+[
+  {
+    "seatId": "mock-alpha:anna",
+    "providerId": "mock-alpha",
+    "modelId": "mock-anna-1.0",
+    "modelFamily": "anna"
+  },
+  {
+    "seatId": "mock-beta:boris",
+    "providerId": "mock-beta",
+    "modelId": "mock-boris-1.0",
+    "modelFamily": "boris"
+  },
+  {
+    "seatId": "mock-gamma:clara",
+    "providerId": "mock-gamma",
+    "modelId": "mock-clara-1.0",
+    "modelFamily": "clara"
+  }
+]

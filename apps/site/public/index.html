@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Edict Protect is autonomous, non-custodial dispute protection for agent payments.">
+  <meta name="theme-color" content="#090a09">
+  <title>Edict | Edict Protect for agent payments</title>
+  <link rel="stylesheet" href="assets/site.css?v=0.1.0-testnet">
+</head>
+<body>
+<section class="hero">
+  <canvas id="signal-canvas" aria-hidden="true"></canvas>
+  <div class="shell">
+    <nav class="site-nav" aria-label="Main navigation">
+      <a class="wordmark" href="#top"><span class="mark">E</span><span>Edict</span></a>
+      <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false">&#9776;</button>
+      <div class="nav-links">
+        <a href="#how">Product</a><a href="#trace">Protocol trace</a><a href="#architecture">Architecture</a><a href="#partners">For platforms</a>
+        <a class="nav-cta" href="mailto:hello@edictprotect.com">Design partnership</a>
+      </div>
+    </nav>
+    <div class="hero-copy" id="top">
+      <p class="eyebrow">Edict / Protect</p>
+      <h1>Edict Protect</h1>
+      <p class="hero-lede">Agent transactions make promises. Edict Protect observes the evidence, resolves exceptions and returns a verifiable settlement instruction, without taking custody.</p>
+      <div class="hero-actions"><a class="button primary" href="#trace">Watch protection run</a><a class="button" href="#how">How it works</a></div>
+      <div class="hero-proof"><span>Non-custodial</span><span>Multi-model decisions</span><span>Contract-enforced outcomes</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="intro" id="how"><div class="shell intro-grid">
+  <div><span class="section-index">01 / The product</span></div>
+  <div><h2>Protection without a second workflow.</h2><p class="section-lede">The platform integrates once. Each payment carries its promise, acceptance criteria and permitted outcomes. Both parties consent inside the payment flow; Edict runs in the background and appears only when something needs attention.</p></div>
+</div></section>
+
+<section class="flow"><div class="shell flow-grid">
+  <article class="flow-step"><b>01</b><h3>Commit the promise</h3><p>The payment signs plain-language terms, objective checks, deadlines and possible outcomes.</p></article>
+  <article class="flow-step"><b>02</b><h3>Observe delivery</h3><p>Connectors turn funding, delivery and evidence into one canonical, replay-safe event stream.</p></article>
+  <article class="flow-step"><b>03</b><h3>Resolve exceptions</h3><p>Deterministic checks go first. Independent AI judges handle ambiguity; human review remains a policy toggle.</p></article>
+  <article class="flow-step"><b>04</b><h3>Settle, without custody</h3><p>A customer-owned contract verifies the signed result. Edict can relay proof, but cannot redirect funds.</p></article>
+</div></section>
+
+<section class="trace-section" id="trace"><div class="shell">
+  <div class="trace-head"><div><span class="section-index">02 / Example trace</span><h2>See the protocol think.</h2></div><p>Most payments never become disputes. Protect continuously reduces the transaction to the smallest next action.</p></div>
+  <div class="scenario-control" aria-label="Choose transaction scenario"><button class="active" data-scenario="api">Agent API</button><button data-scenario="compute">Compute job</button><button data-scenario="market">Marketplace</button></div>
+  <div class="trace-window">
+    <div class="trace-summary"><span class="trace-type" id="trace-type"></span><h3 id="trace-title"></h3><div class="trace-amount">Protected amount<strong id="trace-amount"></strong></div></div>
+    <div class="event-stream" id="event-stream" aria-live="polite"></div>
+  </div>
+</div></section>
+
+<section class="architecture" id="architecture"><div class="shell architecture-grid">
+  <div class="architecture-copy"><span class="section-index">03 / Architecture</span><h2>One runtime. Separate trust boundaries.</h2><p>Edict coordinates evidence and decisions. It is deliberately unable to satisfy the contract’s execution quorum, hold a customer key, or choose a payout address.</p></div>
+  <div class="architecture-map">
+    <div class="arch-row"><span class="tag">Customer</span><div><h3>Owns the settlement boundary</h3><p>A keyless, immutable contract holds the payment under the customer’s approved configuration.</p></div></div>
+    <div class="arch-row"><span class="tag">Protect</span><div><h3>Observes and orchestrates</h3><p>The hosted runtime schedules deadlines, verifies signed evidence, runs adjudication and publishes canonical events.</p></div></div>
+    <div class="arch-row"><span class="tag">Judges</span><div><h3>Produce independently verifiable decisions</h3><p>Multiple model providers run two party-order orientations. Proof and confidence gates exclude unverified votes.</p></div></div>
+    <div class="arch-row"><span class="tag">Contract</span><div><h3>Revalidates every settlement</h3><p>Challenge windows, exact outcomes, nonces and independent execution signatures are checked on-chain.</p></div></div>
+    <div class="arch-row"><span class="tag">Intents</span><div><h3>Moves value across chains</h3><p>NEAR Intents supplies wallet authentication and cross-chain liquidity; the Edict contract remains the protection state machine.</p></div></div>
+  </div>
+</div></section>
+
+<section class="integration" id="integrate"><div class="shell integration-grid">
+  <div class="integration-copy"><span class="section-index">04 / Integration</span><h2>Protection should be a payment primitive.</h2><p class="section-lede">A rail or marketplace configures its settlement boundary once, then registers each protected payment as part of the transaction it already creates. No separate Edict account, case form or custody handoff is required.</p>
+    <div class="integration-facts"><span>One-time settlement setup</span><span>Default protection policy</span><span>Signed events and webhooks</span></div>
+  </div>
+  <div class="code-surface" aria-label="Edict Protect integration example">
+    <div class="code-head"><span>protect.ts</span><span>Core registration path</span></div>
+    <pre><code><span>import { createEdict } from '@edict/sdk';</span>
+<span>import { ProtectionRuntimeHttpClient } from '@edict/protection-runtime';</span>
+<span>const edict = createEdict({ mode: 'live', settlement });</span>
+<span>const protect = new ProtectionRuntimeHttpClient({ baseUrl, apiToken });</span>
+<span>const payment = await edict.protectPayment(input);</span>
+<span>await protect.protect(payment, { profile: edict.profile, intents });</span></code></pre>
+    <div class="code-foot"><span>Funds stay with the customer or rail</span><span>Edict receives no payment key</span></div>
+  </div>
+</div></section>
+
+<section class="comparison"><div class="shell"><span class="section-index">05 / Difference</span><h2>Not support software. Not a custodian.</h2>
+  <table class="comparison-table"><thead><tr><th>Capability</th><th>Manual dispute ops</th><th>Edict Protect</th></tr></thead><tbody>
+    <tr><td>Terms committed before payment</td><td>Sometimes</td><td class="yes">Native</td></tr>
+    <tr><td>Objective failure automation</td><td>Manual review</td><td class="yes">Event driven</td></tr>
+    <tr><td>Ambiguous claims</td><td>Single operator</td><td class="yes">Independent judges</td></tr>
+    <tr><td>Customer funds</td><td>Often platform controlled</td><td class="yes">Customer contract</td></tr>
+    <tr><td>Decision to settlement</td><td>Ticket and back office</td><td class="yes">Verifiable proof relay</td></tr>
+  </tbody></table>
+</div></section>
+
+<section class="partners" id="partners"><div class="shell"><span class="section-index">06 / First partners</span><h2>Built for platforms that already sit in the transaction.</h2>
+  <div class="partner-list">
+    <div class="partner-row"><b>01</b><h3>Agent payment rails</h3><p>Add a protection primitive across every wallet and chain without becoming the dispute desk.</p></div>
+    <div class="partner-row"><b>02</b><h3>Agent marketplaces</h3><p>Embed bilateral consent where tasks are accepted and use native delivery context as evidence.</p></div>
+    <div class="partner-row"><b>03</b><h3>API and compute platforms</h3><p>Turn measurable service promises, receipts and attestations into automatic resolution.</p></div>
+  </div>
+</div></section>
+
+<section class="closing"><div class="shell"><span class="section-index">Edict / Product 01</span><h2>Make agent payments safe enough to become ordinary.</h2><p>Edict is the trust layer for autonomous commerce. Edict Protect is its core product, now preparing for a first NEAR Intents design-partner deployment.</p><a class="button primary" href="mailto:hello@edictprotect.com">Discuss a design partnership</a></div></section>
+<footer class="shell"><span>© 2026 Edict</span><span>Edict Protect · autonomous dispute protection</span><span>Testnet preview · unaudited · not for production value</span></footer>
+<script src="assets/site.js?v=0.1.0-testnet"></script>
+</body>
+</html>

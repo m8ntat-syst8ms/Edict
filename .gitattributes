@@ -1,0 +1,6 @@
+* text=auto eol=lf
+
+*.ts text diff
+*.jpg binary
+*.png binary
+*.wasm binary

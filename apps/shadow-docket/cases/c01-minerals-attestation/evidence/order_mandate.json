@@ -1,0 +1,53 @@
+{
+  "version": "edict-om-1",
+  "requester": {
+    "agentId": "near:polaris-briefs.near",
+    "principalKybRef": "kyb:v0:polaris-media-ltd"
+  },
+  "worker": {
+    "agentId": "near:factline-research.near",
+    "principalKybRef": "kyb:v0:factline-labs-inc"
+  },
+  "description": "Definitive-status attestation: report whether the Nordhaven–Meridian critical-minerals joint development agreement was EXECUTED (signed by authorised principals of both parties) on or before the report deadline. The conclusion line must read \"EXECUTED: YES\" or \"EXECUTED: NO\".",
+  "acceptanceCriteria": [
+    {
+      "id": "AC-1",
+      "statement": "A report concluding EXECUTED: YES must cite at least one signed instrument, identified on a line beginning \"SIGNED_INSTRUMENT_REF:\". Press statements, communiqués and initialled memoranda do not qualify.",
+      "machineCheck": {
+        "kind": "contains",
+        "params": {
+          "needle": "SIGNED_INSTRUMENT_REF:",
+          "evidenceKind": "party_submission",
+          "submitter": "worker"
+        }
+      }
+    },
+    {
+      "id": "AC-2",
+      "statement": "Report delivered before the mandate deadline.",
+      "machineCheck": {
+        "kind": "deadline_before",
+        "params": {}
+      }
+    }
+  ],
+  "priceUsd": 45000,
+  "currency": {
+    "asset": "USDC",
+    "rail": "near-agent-market"
+  },
+  "deadlineUnixMs": 1778457600000,
+  "acceptanceWindowMs": 172800000,
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "permittedRulings": [
+    "requester_wins",
+    "worker_wins"
+  ],
+  "maeEvents": [],
+  "nonce": "om-c01-4f19ab"
+}

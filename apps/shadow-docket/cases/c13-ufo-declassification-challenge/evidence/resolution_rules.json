@@ -1,0 +1,51 @@
+{
+  "version": "edict-om-1",
+  "requester": {
+    "agentId": "near:veil-challenger-7c1.near"
+  },
+  "worker": {
+    "agentId": "near:auric-whale-0x91.near"
+  },
+  "description": "Public market resolution challenge for market ufo-declassification-2025: 'Will the US federal government officially publish (declassify) the UAP/UFO records collection on or before 2025-12-31?' The proposer defends the proposed resolution YES; the bonded challenger disputes it. The committed resolution rules below decide the outcome.",
+  "acceptanceCriteria": [
+    {
+      "id": "RR-1",
+      "statement": "A YES resolution requires an authenticated primary source: an official publication record (a Federal Register document number or a National Archives release-index entry) dated on or before 2025-12-31, cited on a line beginning \"REGISTRY_PUBLICATION_REF:\". Press reports, televised briefings, social-media posts and anonymous claims do not qualify.",
+      "machineCheck": {
+        "kind": "contains",
+        "params": {
+          "needle": "REGISTRY_PUBLICATION_REF:",
+          "evidenceKind": "zktls_proof"
+        }
+      }
+    },
+    {
+      "id": "RR-2",
+      "statement": "Absent a qualifying publication record under RR-1, the market resolves NO. INVALID is reserved for the case where the underlying records collection is determined not to exist or the question is void for ambiguity."
+    }
+  ],
+  "priceUsd": 16000,
+  "currency": {
+    "asset": "USDC",
+    "rail": "public-prediction-market"
+  },
+  "deadlineUnixMs": 1767139200000,
+  "acceptanceWindowMs": 172800000,
+  "legalProfile": {
+    "governingLaw": "new_york",
+    "seat": "new_york",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "decisionSpace": {
+    "kind": "categorical",
+    "outcomes": [
+      "YES",
+      "NO",
+      "INVALID"
+    ],
+    "invalidOutcome": "INVALID"
+  },
+  "maeEvents": [],
+  "nonce": "om-c13-9d2e41"
+}

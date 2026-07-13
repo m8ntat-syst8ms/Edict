@@ -1,0 +1,8 @@
+hash-chain log excerpt (anchored head 44be…)
+[2026-04-20T10:00Z] mandate funded, escrow 120 USDC
+[2026-04-24T18:22Z] worker: "about 80 percent done, on track for the deadline"
+[2026-04-27T00:00Z] deadline reached — no delivery manifest committed
+[2026-04-27T09:15Z] requester: "deadline passed, where is the dataset?"
+[2026-04-28T09:20Z] requester: second nudge — no worker response
+[2026-04-30T08:00Z] requester: dispute opened
+delivery events in window: NONE

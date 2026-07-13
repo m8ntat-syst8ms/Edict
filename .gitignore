@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+*.tsbuildinfo
+contracts/near/target/
+contracts/near/**/target/
+coverage/
+*.log
+
+# Secrets — never commit env files (examples are fine)
+.env
+.env.*
+!.env.example
+
+# Testnet account keys + demo signer keys — never commit
+scripts/testnet/.credentials/
+
+# Generated docket runs
+apps/shadow-docket/reports/
+arbiter-archive/
+
+# Qualification and operational material belongs in the private repository
+apps/shadow-docket/holdout/
+apps/shadow-docket/private-cases/
+apps/shadow-docket/private-results/
+services/arbiter/private-tests/
+services/arbiter/production/
+config/customers/
+config/production/
+*.seats.production.json
+*.signing-policy.json
+
+# Local application state
+infra/dstack-node/app/data/
+
+# OS noise
+.DS_Store

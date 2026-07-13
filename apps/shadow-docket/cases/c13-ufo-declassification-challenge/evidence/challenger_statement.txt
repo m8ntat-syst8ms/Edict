@@ -1,0 +1,20 @@
+CHALLENGER STATEMENT — bonded challenge to the proposed resolution of market
+ufo-declassification-2025
+
+The committed resolution rules are explicit. RR-1 admits a YES resolution
+only on an authenticated primary source: an official publication record — a
+Federal Register document number or a National Archives release-index entry —
+dated on or before 2025-12-31 and cited on a REGISTRY_PUBLICATION_REF line.
+No such record exists.
+
+The bonded third-party zkTLS registry extract in evidence shows zero
+qualifying Federal Register documents and zero National Archives release
+entries for the period. A televised briefing promising "imminent release" is
+precisely the kind of press material RR-1 says does not qualify, and a
+promise to publish is not a publication.
+
+I also note the pattern around the proposal: a single account accumulated an
+outsized position in the final week of December, and the proposed resolution
+tracks that position rather than the registry evidence. Whatever the motive,
+the committed rules leave no discretion here. Under RR-2, absent a qualifying
+publication record, the market resolves NO.

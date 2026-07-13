@@ -1,0 +1,17 @@
+{
+  "caseId": "d0c4e7a0-0013-4e01-8e01-000000000013",
+  "title": "UFO-files declassification market challenge (whale-forced YES adaptation)",
+  "expected": {
+    "kind": "categorical",
+    "outcome": "NO"
+  },
+  "rationale": "The market's committed resolution rules (RR-1) admit a YES resolution only on an authenticated primary source — an official publication record (Federal Register document number or National Archives release-index entry) dated on or before the deadline. The bonded third-party zkTLS registry extract shows zero qualifying documents in either registry; the proposer offers only unauthenticated press speculation about an 'imminent release', which RR-1 expressly disqualifies. Under RR-2 the market resolves NO.",
+  "difficulty": "easy",
+  "tags": [
+    "real_dispute",
+    "market_resolution",
+    "oracle_manipulation",
+    "public_resolution"
+  ],
+  "historicalDivergence": "Adapted from the December 2025 \"$16M UFO declassification\" prediction-market resolution, where a whale's concentrated position pushed the proposed resolution to YES although no qualifying official publication record existed by the market deadline. Groundtruth is the evidence-supported outcome (NO), not the manipulated historical resolution."
+}

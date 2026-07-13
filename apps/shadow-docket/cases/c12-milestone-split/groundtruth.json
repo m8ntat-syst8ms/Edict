@@ -1,0 +1,16 @@
+{
+  "caseId": "d0c4e7a0-0012-4e01-8e01-000000000012",
+  "title": "Convenience cancellation at 2 of 4 milestones: 50/50 split (edge)",
+  "expected": {
+    "kind": "split",
+    "requesterBps": 5000
+  },
+  "splitToleranceBps": 1250,
+  "rationale": "Two of four separately-priced milestones were delivered checksum-conform before the requester's convenience cancellation (authenticated stop-work notice in the venue log). Neither full refund nor full payment is supportable: per-milestone pricing makes a 50/50 split of the escrow the evidence-tracked outcome.",
+  "difficulty": "medium",
+  "tags": [
+    "edge",
+    "split",
+    "partial_delivery"
+  ]
+}

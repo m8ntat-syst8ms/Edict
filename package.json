@@ -1,0 +1,34 @@
+{
+  "name": "edict-monorepo",
+  "private": true,
+  "version": "0.1.0-testnet",
+  "description": "Edict — autonomous, non-custodial trust infrastructure for agent commerce; Edict Protect is the core product",
+  "workspaces": [
+    "packages/*",
+    "services/*",
+    "apps/*",
+    "infra/dstack-node/app"
+  ],
+  "scripts": {
+    "check:public-boundary": "node scripts/check-public-boundary.mjs",
+    "build": "npm run build -w @edict/core -w @edict/evidence -w @edict/arbiter -w @edict/linter -w @edict/near-intents -w @edict/near-deployer -w @edict/sdk -w @edict/protection-runtime -w @edict/shadow-docket -w @edict/mcp-server -w @edict/console -w @edict/protect-app -w @edict/site -w @edict/dstack-node --if-present",
+    "test": "npm run test -w @edict/core -w @edict/evidence -w @edict/arbiter -w @edict/linter -w @edict/near-intents -w @edict/near-deployer -w @edict/sdk -w @edict/protection-runtime -w @edict/shadow-docket -w @edict/mcp-server -w @edict/console -w @edict/protect-app -w @edict/site -w @edict/dstack-node --if-present",
+    "test:rust": "cargo test --workspace --manifest-path contracts/near/Cargo.toml",
+    "test:sandbox": "contracts/near/scripts/test-production-sandbox.sh && contracts/near/scripts/test-intents-sandbox.sh",
+    "check": "npm run check:public-boundary && npm run build && npm test && npm run test:rust",
+    "demo": "tsc -p scripts/demo/tsconfig.json && node scripts/demo/dist/product-demo.js",
+    "site": "npm run build -w @edict/site",
+    "build:testnet": "tsc -p scripts/testnet/tsconfig.json",
+    "testnet:signers": "npm run build:testnet && node scripts/testnet/dist/gen-demo-signers.js",
+    "testnet:deploy": "npm run build && npm run build:testnet && node scripts/testnet/dist/deploy.js",
+    "testnet:product": "npm run build && npm run build:testnet && node scripts/testnet/dist/product-run.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "npm@10.9.2",
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "typescript": "^7.0.2"
+  }
+}

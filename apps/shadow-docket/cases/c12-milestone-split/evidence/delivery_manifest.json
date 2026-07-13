@@ -1,0 +1,18 @@
+{
+  "version": "edict-dm-1",
+  "jobNonce": "om-c12-3d66b8",
+  "deliveredAtUnixMs": 1777852800000,
+  "artifacts": [
+    {
+      "name": "module-1.pkg",
+      "sha256": "f71ed12ab9d433963b46d502d0557fccee7dd6162df1374d4403c43d31ee7b2e",
+      "format": "application/zip"
+    },
+    {
+      "name": "module-2.pkg",
+      "sha256": "f008cc1dddbe649f0faa7d7d597406523336521279589b8a3b47e0cc015060e2",
+      "format": "application/zip"
+    }
+  ],
+  "notes": "modules 1 and 2 delivered and conforming; modules 3 and 4 halted on requester stop-work notice"
+}

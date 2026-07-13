@@ -1,0 +1,11 @@
+{
+  "name": "@edict/site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GitHub Pages-ready Edict landing page for the Edict Protect core product",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test scripts/site.test.mjs"
+  }
+}

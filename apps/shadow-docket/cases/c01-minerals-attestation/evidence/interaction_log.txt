@@ -1,0 +1,4 @@
+hash-chain log excerpt (anchored head 9f31…)
+[2026-04-20T09:00Z] mandate funded, escrow 45000 USDC
+[2026-05-10T16:41Z] worker: delivery manifest committed
+[2026-05-13T08:02Z] requester: dispute opened — conclusion unsupported by any signed instrument

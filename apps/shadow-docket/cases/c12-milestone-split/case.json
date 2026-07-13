@@ -1,0 +1,75 @@
+{
+  "caseId": "d0c4e7a0-0012-4e01-8e01-000000000012",
+  "caseType": "bilateral",
+  "publicity": "sealed",
+  "requester": {
+    "agentId": "near:coursecraft.near",
+    "principalKybRef": "kyb:v0:coursecraft-ab"
+  },
+  "worker": {
+    "agentId": "near:lessonwright.near",
+    "principalKybRef": "kyb:v0:lessonwright-ltd",
+    "erc8004Ref": "eip155:1/0x8004fAce/7719"
+  },
+  "orderMandateHash": "a31d547bcfccd4246fce0355d6d2920dfe3963a7365107925938330521e08d1d",
+  "deliveryManifestHash": "12479da3fc4d5da4194f0593b413a76ccc624923eb6ab90dcfd990e6e0686471",
+  "evidence": [
+    {
+      "kind": "order_mandate",
+      "sha256": "a31d547bcfccd4246fce0355d6d2920dfe3963a7365107925938330521e08d1d",
+      "submitter": "system",
+      "uri": "evidence/order_mandate.json",
+      "authenticated": true
+    },
+    {
+      "kind": "delivery_manifest",
+      "sha256": "12479da3fc4d5da4194f0593b413a76ccc624923eb6ab90dcfd990e6e0686471",
+      "submitter": "worker",
+      "uri": "evidence/delivery_manifest.json",
+      "authenticated": true
+    },
+    {
+      "kind": "interaction_log_head",
+      "sha256": "ff3f295a8f3ff1d6de9ed73be3d3c8e11a0a0943f447ff9e2905f9b99cb1cca9",
+      "submitter": "venue",
+      "uri": "evidence/interaction_log.txt",
+      "authenticated": true
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "9f0f3f04856c3d170fd58112d8e6840f92dc08e5d034254012949e7b4247caec",
+      "submitter": "requester",
+      "uri": "evidence/requester_pleading.txt",
+      "authenticated": false
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "653f26c22f6347e59bac4684d4e4715e00e69e12a8994eb69f189d012f8f0ee8",
+      "submitter": "worker",
+      "uri": "evidence/worker_pleading.txt",
+      "authenticated": false
+    }
+  ],
+  "valueUsd": 6000,
+  "tier": "C",
+  "custodyMode": "M1_native_escrow",
+  "railRef": {
+    "rail": "near-agent-market",
+    "jobId": "job-2026-0590"
+  },
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "openedAtUnixMs": 1777939200000,
+  "decisionSpace": {
+    "kind": "escrow_branches",
+    "permitted": [
+      "requester_wins",
+      "worker_wins",
+      "split"
+    ]
+  }
+}

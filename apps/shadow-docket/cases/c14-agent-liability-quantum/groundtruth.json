@@ -1,0 +1,16 @@
+{
+  "caseId": "d0c4e7a0-0014-4e01-8e01-000000000014",
+  "title": "AI-agent liability claim — disputed quantum (clause 7.2 exclusion)",
+  "expected": {
+    "kind": "scalar",
+    "value": 30000
+  },
+  "scalarToleranceBps": 1000,
+  "rationale": "The covered incident is conceded; only quantum is disputed. The policy's committed criteria make exactly two loss components machine-verifiable — remediation invoices A and B (15000 USD each, QC-1/QC-2), both hash-committed as authenticated payment evidence — while clause 7.2 (QC-3) excludes the claimed 20000 USD of consequential losses (lost margin, goodwill) regardless of proof. Payable quantum: 30000 USD, within ±10% for agreement scoring.",
+  "difficulty": "easy",
+  "tags": [
+    "synthetic",
+    "insurance_claim",
+    "quantum"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "@edict/arbiter",
+  "version": "0.0.1",
+  "description": "Deterministic checks, multi-provider adjudication, proof verification, and verdict aggregation",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "edict-arbiter": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\""
+  },
+  "dependencies": {
+    "@edict/core": "*",
+    "@edict/evidence": "*",
+    "@noble/curves": "^2.2.0",
+    "@noble/hashes": "^2.2.0"
+  }
+}

@@ -1,0 +1,13 @@
+[package]
+name = "edict-global-publisher-test"
+description = "Test-only NEAR global-contract publisher used by sandbox integration tests"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+near-sdk = { workspace = true }

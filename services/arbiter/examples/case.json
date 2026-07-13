@@ -1,0 +1,63 @@
+{
+  "caseId": "9884aa27-3001-4f75-b9bb-9d40b41f55a3",
+  "caseType": "bilateral",
+  "publicity": "sealed",
+  "requester": {
+    "agentId": "agent:req-1",
+    "principalKybRef": "kyb:req-principal"
+  },
+  "worker": {
+    "agentId": "agent:work-1",
+    "principalKybRef": "kyb:work-principal"
+  },
+  "orderMandateHash": "e4aa9034b3e6d6d5ec97ab3275722b9ae4883e73a58057ca9a0ebb8a0952a42b",
+  "deliveryManifestHash": "0f7b42b94f5760ff85c9e43993a3d77bf1d0d1a074063e1d2912a07e553f897a",
+  "evidence": [
+    {
+      "kind": "order_mandate",
+      "sha256": "e4aa9034b3e6d6d5ec97ab3275722b9ae4883e73a58057ca9a0ebb8a0952a42b",
+      "submitter": "system",
+      "authenticated": true
+    },
+    {
+      "kind": "delivery_manifest",
+      "sha256": "0f7b42b94f5760ff85c9e43993a3d77bf1d0d1a074063e1d2912a07e553f897a",
+      "submitter": "worker",
+      "authenticated": true
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "fe6213132a8de198c97e7972b992bd75890ed818acc1a08fd54fbf53533d066c",
+      "submitter": "requester",
+      "authenticated": false
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "cf92ef15a76c7862044d9c9992e03bf5deffcd8cc1ea986c365268925fc0b1b0",
+      "submitter": "worker",
+      "authenticated": false
+    }
+  ],
+  "valueUsd": 500,
+  "tier": "B",
+  "custodyMode": "M2_external_escrow",
+  "railRef": {
+    "rail": "test-rail"
+  },
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "openedAtUnixMs": 1750000000000,
+  "decisionSpace": {
+    "kind": "escrow_branches",
+    "permitted": [
+      "requester_wins",
+      "worker_wins",
+      "split",
+      "redo"
+    ]
+  }
+}

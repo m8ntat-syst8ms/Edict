@@ -1,0 +1,13 @@
+{
+  "version": "edict-dm-1",
+  "jobNonce": "om-c01-4f19ab",
+  "deliveredAtUnixMs": 1778371200000,
+  "artifacts": [
+    {
+      "name": "attestation-report.md",
+      "sha256": "4f1046111ed4add532b16a17f867f1489483a8b8467881188ff534151c20305b",
+      "format": "text/markdown"
+    }
+  ],
+  "notes": "attestation report delivered within deadline"
+}

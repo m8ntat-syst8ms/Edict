@@ -1,0 +1,19 @@
+UNDERWRITER SUBMISSION — Aegis Mutual pool (policy pol-2026-1188)
+
+The incident of 2026-05-18 is a covered event; the pool does not contest
+liability. The only question is quantum, and the policy's committed terms
+answer it.
+
+Clause 7.2, incorporated into the committed claim criteria as QC-3, excludes
+consequential and indirect losses — expressly including lost margin, goodwill
+and projected revenue — regardless of proof. That allocation of risk was
+priced into the premium, and the claimant agreed to it when the policy was
+bound.
+
+The two hash-committed remediation invoices (QC-1 and QC-2, 15000 USD each)
+verify against the committed hashes and are payable in full: 30000 USD. The
+remaining 20000 USD claimed is lost margin and goodwill during the pipeline
+freeze — exactly the class of loss clause 7.2 excludes, whatever evidence is
+offered for it.
+
+The correct quantum is 30000 USD.

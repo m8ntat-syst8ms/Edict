@@ -1,0 +1,72 @@
+{
+  "caseId": "d0c4e7a0-0014-4e01-8e01-000000000014",
+  "caseType": "claim",
+  "publicity": "sealed",
+  "requester": {
+    "agentId": "near:relay-ops.near",
+    "principalKybRef": "kyb:v0:relay-ops-gmbh"
+  },
+  "worker": {
+    "agentId": "near:aegis-pool.near",
+    "principalKybRef": "kyb:v0:aegis-mutual-ltd"
+  },
+  "orderMandateHash": "fabd0d28b1edb23309c8a0c2f2d7a784c66a08cde94c7774d8fc514c69e1f246",
+  "evidence": [
+    {
+      "kind": "order_mandate",
+      "sha256": "fabd0d28b1edb23309c8a0c2f2d7a784c66a08cde94c7774d8fc514c69e1f246",
+      "submitter": "system",
+      "uri": "evidence/policy_claim_mandate.json",
+      "authenticated": true
+    },
+    {
+      "kind": "payment_receipt",
+      "sha256": "9b22a2f247fdda6d8096e5065e107009e0ccceaa5bb6718730add173723f360a",
+      "submitter": "requester",
+      "uri": "evidence/invoice_a.json",
+      "authenticated": true
+    },
+    {
+      "kind": "payment_receipt",
+      "sha256": "70b5d7cf33490c007dbaa56987a66eba449a48dab67ad98724a0b7c8afec9fb6",
+      "submitter": "requester",
+      "uri": "evidence/invoice_b.json",
+      "authenticated": true
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "06d9113aa20ddfa3c48a047e725756183341a8627dc2100359088e8ec70ea878",
+      "submitter": "requester",
+      "uri": "evidence/claimant_submission.txt",
+      "authenticated": false
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "8d06c99cd7ee9a30eafb2d368a3cf7f709a699ac930d7f7faba1f946b48fdc0e",
+      "submitter": "worker",
+      "uri": "evidence/underwriter_submission.txt",
+      "authenticated": false
+    }
+  ],
+  "valueUsd": 50000,
+  "tier": "C",
+  "custodyMode": "M4_no_custody",
+  "railRef": {
+    "rail": "aegis-claims",
+    "policyId": "pol-2026-1188",
+    "claimId": "clm-2026-0042"
+  },
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "openedAtUnixMs": 1780531200000,
+  "decisionSpace": {
+    "kind": "bounded_scalar",
+    "min": 0,
+    "max": 50000,
+    "unit": "USD"
+  }
+}

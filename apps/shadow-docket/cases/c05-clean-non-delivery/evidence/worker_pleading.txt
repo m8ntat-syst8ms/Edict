@@ -1,0 +1,6 @@
+PLEADING OF THE WORKER — job-2026-0533
+
+The dataset was sent to the requester's operations mailbox as a zip attachment
+on the evening of the deadline. Venue delivery was skipped because the file
+exceeded the venue attachment limit. No bounce was received, so the delivery
+stands. We ask for release of the escrow.

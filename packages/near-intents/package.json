@@ -1,0 +1,22 @@
+{
+  "name": "@edict/near-intents",
+  "version": "0.0.1",
+  "description": "Non-custodial NEAR Intents and 1Click transport plans for Edict settlement",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\""
+  },
+  "dependencies": {
+    "@defuse-protocol/one-click-sdk-typescript": "^0.1.25",
+    "@edict/core": "*"
+  },
+  "devDependencies": {
+    "bs58": "^6.0.0"
+  }
+}

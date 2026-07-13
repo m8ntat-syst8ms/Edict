@@ -1,0 +1,28 @@
+{
+  "name": "@edict/shadow-docket",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Reproducible Edict arbiter harness with public illustrative fixtures",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "shadow-docket": "dist/run.js"
+  },
+  "files": [
+    "dist",
+    "cases",
+    "seats"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true })\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "test": "npm run build && node --test dist/*.test.js",
+    "docket": "node dist/run.js run",
+    "docket:validate": "node dist/run.js validate"
+  },
+  "dependencies": {
+    "@edict/arbiter": "*",
+    "@edict/core": "*"
+  }
+}

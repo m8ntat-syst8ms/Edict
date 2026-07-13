@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edict Developer Console</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --panel: #ffffff; --ink: #1a2130; --muted: #66707f;
+    --line: #dde1e8; --accent: #1d4ed8; --good: #15803d; --warn: #b45309; --bad: #b91c1c;
+    --chip: #eef1f5; --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; } /* .grid/.row display rules must not defeat the hidden attribute */
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  header { display: flex; align-items: baseline; gap: 1.5rem; padding: .9rem 1.25rem;
+    background: var(--panel); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  header h1 { font-size: 1.05rem; margin: 0; letter-spacing: .02em; }
+  header h1 span { color: var(--muted); font-weight: 400; }
+  nav { display: flex; gap: .25rem; }
+  nav button { border: 1px solid transparent; background: none; padding: .35rem .8rem; font: inherit;
+    color: var(--muted); cursor: pointer; border-radius: 6px; }
+  nav button.active { color: var(--accent); background: #e8edfb; border-color: #c8d4f5; font-weight: 600; }
+  main { max-width: 1100px; margin: 0 auto; padding: 1.25rem; }
+  section.tab[hidden] { display: none; }
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: 1rem 1.1rem; margin-bottom: 1rem; }
+  .panel h2 { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em;
+    color: var(--muted); margin: 0 0 .8rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .7rem 1rem; }
+  label.f { display: block; font-size: .78rem; color: var(--muted); }
+  label.f > input, label.f > select, label.f > textarea { display: block; width: 100%; margin-top: .2rem;
+    font: inherit; color: var(--ink); padding: .35rem .5rem; border: 1px solid var(--line);
+    border-radius: 6px; background: #fff; }
+  label.f > textarea { font-family: var(--mono); font-size: .8rem; min-height: 3.4rem; resize: vertical; }
+  label.c { display: inline-flex; align-items: center; gap: .35rem; margin-right: 1rem; font-size: .85rem; }
+  .row { display: flex; gap: 1rem; align-items: flex-end; flex-wrap: wrap; margin-top: .7rem; }
+  button.primary { background: var(--accent); border: none; color: #fff; font: inherit; font-weight: 600;
+    padding: .45rem 1.1rem; border-radius: 6px; cursor: pointer; }
+  button.primary:disabled { opacity: .5; cursor: default; }
+  .badge { display: inline-block; padding: .1rem .55rem; border-radius: 999px; font-size: .75rem;
+    font-weight: 700; color: #fff; }
+  .badge.good { background: var(--good); } .badge.warn { background: var(--warn); }
+  .badge.bad { background: var(--bad); } .badge.neutral { background: var(--muted); }
+  .score { font-size: 1.6rem; font-weight: 700; }
+  .sev { display: inline-block; min-width: 3.2rem; text-align: center; border-radius: 4px;
+    font-size: .7rem; font-weight: 700; padding: .05rem .3rem; margin-right: .5rem; color: #fff; }
+  .sev.error { background: var(--bad); } .sev.warn { background: var(--warn); } .sev.info { background: var(--muted); }
+  ul.findings { list-style: none; padding: 0; margin: .6rem 0 0; }
+  ul.findings li { padding: .35rem 0; border-top: 1px solid var(--line); }
+  ul.findings .sugg { color: var(--muted); font-size: .8rem; margin-left: 3.7rem; display: block; }
+  code, pre { font-family: var(--mono); font-size: .78rem; }
+  pre { background: #f1f3f6; border: 1px solid var(--line); border-radius: 6px; padding: .6rem;
+    overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+  table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+  th, td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid var(--line); }
+  th { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  tbody tr { cursor: pointer; } tbody tr:hover { background: #f0f4ff; }
+  .hash { font-family: var(--mono); font-size: .72rem; color: var(--muted); }
+  .hint { background: #fff7e8; border: 1px solid #f0d9a8; color: #7c5a10; border-radius: 6px;
+    padding: .5rem .8rem; margin-bottom: .8rem; font-size: .82rem; }
+  .err { background: #fdeaea; border: 1px solid #efc4c4; color: var(--bad); border-radius: 6px;
+    padding: .5rem .8rem; margin: .6rem 0; font-size: .82rem; white-space: pre-wrap; }
+  .ok-note { color: var(--good); font-size: .82rem; }
+  details { margin-top: .6rem; } summary { cursor: pointer; color: var(--muted); font-size: .82rem; }
+  dl.kv { display: grid; grid-template-columns: max-content 1fr; gap: .15rem .8rem; margin: .4rem 0; }
+  dl.kv dt { color: var(--muted); font-size: .78rem; } dl.kv dd { margin: 0; font-size: .84rem; }
+  ol.instr li { margin-bottom: .5rem; font-size: .82rem; white-space: pre-wrap; }
+  .muted { color: var(--muted); }
+  .subgrid { border-left: 3px solid var(--line); padding-left: .8rem; margin-top: .5rem; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Edict <span>developer console</span></h1>
+  <nav>
+    <button id="nav-editor" class="active">Policy editor</button>
+    <button id="nav-cases">Cases</button>
+    <button id="nav-sandbox">Sandbox</button>
+  </nav>
+  <span class="muted" style="margin-left:auto; font-size:.78rem">Local developer sandbox —
+    <a href="http://127.0.0.1:4880/" style="color:var(--accent)">back to the Edict app</a></span>
+</header>
+<main>
+
+<!-- ======================= POLICY EDITOR ======================= -->
+<section class="tab" id="tab-editor">
+  <div class="panel">
+    <h2>Protection profile</h2>
+    <div class="grid">
+      <label class="f">Name <input id="p-name" value="my-agent-commerce"></label>
+      <label class="f">Version <input id="p-version" value="0.1.0"></label>
+      <label class="f">Acceptance window (ms) <input id="p-window" type="number" value="86400000"></label>
+      <label class="f">Publicity
+        <select id="p-publicity">
+          <option value="">(default: sealed; public for public_resolution)</option>
+          <option value="sealed">sealed</option>
+          <option value="public">public</option>
+        </select>
+      </label>
+      <label class="f">Tier A max (USD) <input id="p-amax" type="number" value="10"></label>
+      <label class="f">Tier B max (USD) <input id="p-bmax" type="number" value="1000"></label>
+      <label class="f">Lint gate: min score <input id="p-minscore" type="number" value="80" min="0" max="100"></label>
+      <label class="f">Lint gate
+        <span class="c" style="margin-top:.45rem"><input id="p-blockonerror" type="checkbox" checked> block on error findings</span>
+      </label>
+    </div>
+
+    <div class="subgrid">
+      <label class="f" style="margin-top:.5rem">Decision space
+        <select id="ds-kind">
+          <option value="escrow_branches">escrow_branches — pre-committed payout branches</option>
+          <option value="categorical">categorical — closed label set</option>
+          <option value="bounded_scalar">bounded_scalar — numeric quantum in [min, max]</option>
+        </select>
+      </label>
+      <div id="ds-escrow" class="row">
+        <label class="c"><input type="checkbox" class="ds-perm" value="requester_wins" checked> requester_wins</label>
+        <label class="c"><input type="checkbox" class="ds-perm" value="worker_wins" checked> worker_wins</label>
+        <label class="c"><input type="checkbox" class="ds-perm" value="split" checked> split</label>
+        <label class="c"><input type="checkbox" class="ds-perm" value="redo" checked> redo</label>
+      </div>
+      <div id="ds-categorical" class="grid" hidden>
+        <label class="f">Outcomes (one per line) <textarea id="ds-outcomes">YES
+NO
+INVALID</textarea></label>
+        <label class="f">Invalid outcome (optional) <input id="ds-invalid" value="INVALID"></label>
+      </div>
+      <div id="ds-scalar" class="grid" hidden>
+        <label class="f">Min <input id="ds-min" type="number" value="0"></label>
+        <label class="f">Max <input id="ds-max" type="number" value="10000"></label>
+        <label class="f">Unit <input id="ds-unit" value="USD"></label>
+      </div>
+    </div>
+
+    <div class="subgrid">
+      <div class="grid" style="margin-top:.5rem">
+        <label class="f">Governing law
+          <select id="lp-law">
+            <option>england_wales</option><option>new_york</option><option>delaware</option>
+            <option>singapore</option><option>difc</option><option>swiss_substantive</option>
+          </select>
+        </label>
+        <label class="f">Seat
+          <select id="lp-seat">
+            <option>london</option><option>new_york</option><option>singapore</option><option>difc</option>
+          </select>
+        </label>
+        <label class="f">Rules <input id="lp-rules" value="edict-drr-v0.1"></label>
+        <label class="f">Enforcement tier
+          <select id="lp-tier"><option selected>E0</option><option>E1</option><option>E2</option><option>E3</option></select>
+        </label>
+      </div>
+    </div>
+
+    <div class="subgrid">
+      <label class="f" style="margin-top:.5rem">Human escalation (where held verdicts route; they never settle as-is)
+        <select id="he-mode">
+          <option value="">(tier defaults: A off · B optional_appeal · C quality_gate)</option>
+          <option value="off">off — programmatic fallback only</option>
+          <option value="optional_appeal">optional_appeal — parties may appeal finals</option>
+          <option value="quality_gate">quality_gate — quality trips go to the bench</option>
+          <option value="required_above_value">required_above_value — cases at/above thresholdUsd always reviewed</option>
+        </select>
+      </label>
+      <div id="he-detail" hidden>
+        <div class="row" style="margin-top:.4rem">
+          <span class="muted" style="font-size:.78rem">Triggers routed to the bench (none checked = mode defaults):</span>
+        </div>
+        <div class="row" style="margin-top:.2rem">
+          <label class="c"><input type="checkbox" class="he-trigger" value="no_majority"> no_majority</label>
+          <label class="c"><input type="checkbox" class="he-trigger" value="insufficient_attested_seats"> insufficient_attested_seats</label>
+          <label class="c"><input type="checkbox" class="he-trigger" value="swap_inconsistency"> swap_inconsistency</label>
+          <label class="c"><input type="checkbox" class="he-trigger" value="low_confidence"> low_confidence</label>
+          <label class="c"><input type="checkbox" class="he-trigger" value="injection_attack"> injection_attack</label>
+          <label class="c"><input type="checkbox" class="he-trigger" value="out_of_policy_evidence"> out_of_policy_evidence</label>
+          <label class="c"><input type="checkbox" class="he-trigger" value="party_appeal"> party_appeal</label>
+        </div>
+        <div class="grid" style="margin-top:.4rem">
+          <label class="f">Tier A override
+            <select class="he-tier" data-tier="A"><option value="">(mode)</option><option>off</option><option>optional_appeal</option><option>quality_gate</option><option>required_above_value</option></select>
+          </label>
+          <label class="f">Tier B override
+            <select class="he-tier" data-tier="B"><option value="">(mode)</option><option>off</option><option>optional_appeal</option><option>quality_gate</option><option>required_above_value</option></select>
+          </label>
+          <label class="f">Tier C override
+            <select class="he-tier" data-tier="C"><option value="">(mode)</option><option>off</option><option>optional_appeal</option><option>quality_gate</option><option>required_above_value</option></select>
+          </label>
+        </div>
+        <div class="grid" style="margin-top:.4rem">
+          <label class="f">Threshold (USD, required_above_value; blank = $1000)
+            <input id="he-threshold" type="number" min="0" step="any" placeholder="1000"></label>
+          <label class="f">Appeal window (ms, optional_appeal)
+            <input id="he-appeal-window" type="number" min="0" placeholder="86400000"></label>
+          <label class="f">Appeal bond multiplier (optional_appeal)
+            <input id="he-appeal-bond" type="number" min="0" step="any" placeholder="2"></label>
+          <label class="f">Reviewer pool
+            <select id="he-pool"><option value="">(unset)</option><option>edict_bench</option><option>customer_panel</option><option>external_arbitrator</option></select>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="subgrid">
+      <div class="grid" style="margin-top:.5rem">
+        <label class="f">MAE events (one per line) <textarea id="p-mae" placeholder="oracle_outage&#10;chain_halt"></textarea></label>
+        <label class="f">Jury: provenance allowlist (one provider id per line)
+          <textarea id="j-allowlist" placeholder="mock-alpha&#10;mock-beta&#10;mock-gamma"></textarea></label>
+        <label class="f">Jury: seats (JSON array; empty = 3 mock sandbox seats)
+          <textarea id="j-seats" placeholder='[{"seatId":"...","providerId":"...","modelId":"...","modelFamily":"..."}]'></textarea></label>
+        <label class="f">Jury
+          <span class="c" style="margin-top:.45rem"><input id="j-proofs" type="checkbox"> require attestation proofs</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <button class="primary" id="p-save">Save profile version</button>
+      <span id="p-save-status"></span>
+    </div>
+    <div id="p-versions" style="margin-top:.8rem"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Order mandate draft (linted live)</h2>
+    <div class="grid">
+      <label class="f" style="grid-column: 1 / -1">Description
+        <textarea id="m-desc">Produce guide.de.md, the agreed German (de-DE) rendering of docs/guide.md, delivered via a committed venue manifest.</textarea></label>
+      <label class="f" style="grid-column: 1 / -1">Acceptance criteria (one statement per line)
+        <textarea id="m-criteria">guide.de.md matches the pinned reference checksum committed in this mandate.</textarea></label>
+      <label class="f">Price (USD) <input id="m-price" type="number" value="500"></label>
+      <label class="f">Deadline <input id="m-deadline" type="datetime-local"></label>
+    </div>
+    <div class="row" style="align-items: center">
+      <span class="score" id="lint-score">–</span>
+      <span class="badge neutral" id="lint-badge">not linted</span>
+      <span class="muted" id="lint-coverage"></span>
+    </div>
+    <div id="lint-problems"></div>
+    <ul class="findings" id="lint-findings"></ul>
+  </div>
+</section>
+
+<!-- ======================= CASES ======================= -->
+<section class="tab" id="tab-cases" hidden>
+  <div class="panel">
+    <h2>Shadow docket</h2>
+    <div id="cases-hint"></div>
+    <table>
+      <thead><tr>
+        <th>Case</th><th>Type</th><th>Tier</th><th>Value</th><th>Ruling</th><th>Status</th><th>Flags</th><th>Agreed</th>
+      </tr></thead>
+      <tbody id="cases-rows"></tbody>
+    </table>
+  </div>
+  <div class="panel" id="case-detail" hidden>
+    <h2 id="cd-title">Case</h2>
+    <div id="cd-body"></div>
+  </div>
+</section>
+
+<!-- ======================= SANDBOX ======================= -->
+<section class="tab" id="tab-sandbox" hidden>
+  <div class="panel">
+    <h2>Sandbox run — real arbiter, offline mock jury, in-memory escrow</h2>
+    <div class="grid">
+      <label class="f">Source
+        <select id="sb-source"><option value="__draft__">Policy editor's current draft</option></select>
+      </label>
+      <label class="f">Profile
+        <select id="sb-profile"><option value="default">default (sandbox)</option></select>
+      </label>
+      <label class="f">Disputed by
+        <select id="sb-by"><option>requester</option><option>worker</option></select>
+      </label>
+    </div>
+    <div id="sb-draft-evidence" class="grid" style="margin-top:.7rem">
+      <label class="f">Requester submission <textarea id="sb-sub-req">The delivered artifact does not satisfy AC-1.</textarea></label>
+      <label class="f">Worker submission <textarea id="sb-sub-work"></textarea></label>
+      <label class="f">Deliver artifact (optional): path <input id="sb-art-path" placeholder="draft.de.md"></label>
+      <label class="f">sha256 (64 hex; leave empty to skip delivery) <input id="sb-art-sha" placeholder=""></label>
+      <label class="f">media type <input id="sb-art-media" value="text/markdown"></label>
+    </div>
+    <div class="row">
+      <button class="primary" id="sb-run">Run</button>
+      <span id="sb-status" class="muted"></span>
+    </div>
+  </div>
+  <div class="panel" id="sb-result" hidden>
+    <h2>Result</h2>
+    <div id="sb-result-body"></div>
+  </div>
+  <div class="panel" id="sb-reviews">
+    <h2>Review queue — cases held for human review</h2>
+    <div id="rq-list"><span class="muted">No sandbox cases are awaiting review.</span></div>
+  </div>
+</section>
+
+</main>
+<script>
+'use strict';
+const $ = (id) => document.getElementById(id);
+const h = (tag, attrs, ...children) => {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === 'class') node.className = v;
+    else if (k === 'text') node.textContent = v;
+    else node.setAttribute(k, v);
+  }
+  for (const child of children) {
+    if (child == null) continue;
+    node.append(typeof child === 'string' ? document.createTextNode(child) : child);
+  }
+  return node;
+};
+async function api(path, opts) {
+  const res = await fetch(path, opts);
+  let body = {};
+  try { body = await res.json(); } catch { /* non-JSON */ }
+  return { ok: res.ok, status: res.status, body };
+}
+const post = (path, body) => api(path, {
+  method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+});
+
+// --- tabs -------------------------------------------------------------------
+const TABS = ['editor', 'cases', 'sandbox'];
+function showTab(name) {
+  for (const t of TABS) {
+    $('tab-' + t).hidden = t !== name;
+    $('nav-' + t).classList.toggle('active', t === name);
+  }
+  if (name === 'cases') loadCases();
+  if (name === 'sandbox') { loadSandboxOptions(); loadReviewQueue(); }
+}
+for (const t of TABS) $('nav-' + t).addEventListener('click', () => showTab(t));
+
+// --- policy editor: collectors ------------------------------------------------
+const lines = (v) => v.split('\n').map((s) => s.trim()).filter((s) => s.length > 0);
+
+function collectDecisionSpace() {
+  const kind = $('ds-kind').value;
+  if (kind === 'escrow_branches') {
+    const permitted = [...document.querySelectorAll('.ds-perm')].filter((c) => c.checked).map((c) => c.value);
+    return { kind, permitted };
+  }
+  if (kind === 'categorical') {
+    const outcomes = lines($('ds-outcomes').value);
+    const invalid = $('ds-invalid').value.trim();
+    const space = { kind, outcomes };
+    if (invalid && outcomes.includes(invalid)) space.invalidOutcome = invalid;
+    return space;
+  }
+  return { kind, min: Number($('ds-min').value), max: Number($('ds-max').value), unit: $('ds-unit').value.trim() || 'USD' };
+}
+function collectLegalProfile() {
+  return { governingLaw: $('lp-law').value, seat: $('lp-seat').value,
+    rules: $('lp-rules').value.trim() || 'edict-drr-v0.1', enforcementTier: $('lp-tier').value };
+}
+function collectDraft() {
+  const deadlineRaw = $('m-deadline').value;
+  const draft = {
+    description: $('m-desc').value,
+    acceptanceCriteria: lines($('m-criteria').value).map((statement) => ({ statement })),
+    priceUsd: Number($('m-price').value),
+    decisionSpace: collectDecisionSpace(),
+    legalProfile: collectLegalProfile(),
+    maeEvents: lines($('p-mae').value),
+    acceptanceWindowMs: Number($('p-window').value),
+  };
+  if (deadlineRaw) draft.deadlineUnixMs = new Date(deadlineRaw).getTime();
+  return draft;
+}
+function collectHumanEscalation() {
+  const mode = $('he-mode').value;
+  if (!mode) return undefined; // absent = tier defaults (A off / B optional_appeal / C quality_gate)
+  const he = { mode };
+  const triggers = [...document.querySelectorAll('.he-trigger')].filter((c) => c.checked).map((c) => c.value);
+  if (triggers.length > 0) he.triggers = triggers;
+  const perTier = {};
+  for (const sel of document.querySelectorAll('.he-tier')) {
+    if (sel.value) perTier[sel.dataset.tier] = sel.value;
+  }
+  if (Object.keys(perTier).length > 0) he.perTier = perTier;
+  if ($('he-threshold').value) he.thresholdUsd = Number($('he-threshold').value);
+  if ($('he-appeal-window').value) he.appealWindowMs = Number($('he-appeal-window').value);
+  if ($('he-appeal-bond').value) he.appealBondMultiplier = Number($('he-appeal-bond').value);
+  if ($('he-pool').value) he.reviewerPool = $('he-pool').value;
+  return he;
+}
+function collectProfile() {
+  const profile = {
+    name: $('p-name').value.trim(),
+    version: $('p-version').value.trim(),
+    defaults: {
+      decisionSpace: collectDecisionSpace(),
+      legalProfile: collectLegalProfile(),
+      acceptanceWindowMs: Number($('p-window').value),
+      maeEvents: lines($('p-mae').value),
+    },
+    tierThresholds: { aMaxUsd: Number($('p-amax').value), bMaxUsd: Number($('p-bmax').value) },
+    juryPolicy: { requireProofs: $('j-proofs').checked },
+    lintGate: { minScore: Number($('p-minscore').value), blockOnError: $('p-blockonerror').checked },
+  };
+  if ($('p-publicity').value) profile.defaults.publicity = $('p-publicity').value;
+  const humanEscalation = collectHumanEscalation();
+  if (humanEscalation) profile.humanEscalation = humanEscalation;
+  const allowlist = lines($('j-allowlist').value);
+  if (allowlist.length > 0) profile.juryPolicy.provenanceAllowlist = allowlist;
+  const seatsRaw = $('j-seats').value.trim();
+  if (seatsRaw) profile.juryPolicy.seats = JSON.parse(seatsRaw); // caller catches
+  return profile;
+}
+// human-escalation detail controls only apply when a mode is elected
+$('he-mode').addEventListener('change', () => {
+  $('he-detail').hidden = !$('he-mode').value;
+});
+
+// decision-space sub-panels
+$('ds-kind').addEventListener('change', () => {
+  const kind = $('ds-kind').value;
+  $('ds-escrow').hidden = kind !== 'escrow_branches';
+  $('ds-categorical').hidden = kind !== 'categorical';
+  $('ds-scalar').hidden = kind !== 'bounded_scalar';
+});
+
+// --- live lint ------------------------------------------------------------------
+let lintTimer;
+function scheduleLint() { clearTimeout(lintTimer); lintTimer = setTimeout(runLint, 400); }
+async function runLint() {
+  const { ok, body } = await post('/api/lint', { mandateDraft: collectDraft() });
+  if (!ok) { $('lint-badge').textContent = 'lint error'; $('lint-badge').className = 'badge bad'; return; }
+  const { report, draftProblems } = body;
+  $('lint-score').textContent = report.score;
+  const cls = report.score >= 90 ? 'good' : report.score >= 70 ? 'warn' : 'bad';
+  $('lint-badge').textContent = cls === 'good' ? 'commit-ready' : cls === 'warn' ? 'needs work' : 'do not commit';
+  $('lint-badge').className = 'badge ' + cls;
+  const mc = report.machineCoverage;
+  $('lint-coverage').textContent = 'machine checks ' + mc.checked + '/' + mc.total + ' (' + mc.pct + '%)';
+  const problems = $('lint-problems');
+  problems.replaceChildren();
+  if (draftProblems && draftProblems.length > 0) {
+    problems.append(h('div', { class: 'hint' }, 'Draft gaps: ' + draftProblems.join(' · ')));
+  }
+  const list = $('lint-findings');
+  list.replaceChildren();
+  for (const f of report.findings) {
+    const li = h('li', {},
+      h('span', { class: 'sev ' + f.severity, text: f.severity }),
+      h('code', { text: f.code }),
+      (f.criterionId ? ' [' + f.criterionId + '] ' : ' '),
+      f.message,
+      f.suggestion ? h('span', { class: 'sugg', text: '↳ ' + f.suggestion }) : null);
+    list.append(li);
+  }
+  if (report.findings.length === 0) list.append(h('li', { class: 'ok-note', text: 'No findings — clean mandate.' }));
+}
+for (const sel of ['input', 'change']) {
+  $('tab-editor').addEventListener(sel, scheduleLint);
+}
+
+// --- profile save + versions ------------------------------------------------------
+async function refreshVersions() {
+  const { body } = await api('/api/profiles');
+  const box = $('p-versions');
+  box.replaceChildren();
+  if (!body.profiles || body.profiles.length === 0) {
+    box.append(h('span', { class: 'muted', text: 'No saved profile versions yet.' }));
+    return;
+  }
+  const table = h('table', {}, h('thead', {}, h('tr', {},
+    h('th', { text: 'Profile' }), h('th', { text: 'Version' }), h('th', { text: 'Hash' }), h('th', { text: 'Saved' }))));
+  const tbody = h('tbody', {});
+  for (const p of body.profiles) {
+    tbody.append(h('tr', {},
+      h('td', { text: p.name }), h('td', { text: p.version }),
+      h('td', {}, h('span', { class: 'hash', text: p.profileHash })),
+      h('td', { text: new Date(p.savedAtUnixMs).toLocaleString() })));
+  }
+  table.append(tbody);
+  box.append(table);
+}
+$('p-save').addEventListener('click', async () => {
+  const status = $('p-save-status');
+  let profile;
+  try { profile = collectProfile(); } catch { status.textContent = 'seats JSON is invalid'; status.className = 'err'; return; }
+  const { ok, status: code, body } = await post('/api/profiles', profile);
+  if (ok) {
+    status.className = 'ok-note';
+    status.textContent = (code === 201 ? 'Saved ' : 'Unchanged ') + body.name + '@' + body.version +
+      ' — ' + body.profileHash.slice(0, 16) + '…';
+    refreshVersions();
+  } else if (code === 409) {
+    status.className = 'err';
+    status.textContent = body.message;
+  } else {
+    status.className = 'err';
+    status.textContent = (body.problems || [body.message || 'save failed']).join('\n');
+  }
+});
+
+// --- cases --------------------------------------------------------------------------
+let casesCache = [];
+async function loadCases() {
+  const { body } = await api('/api/cases');
+  casesCache = body.cases || [];
+  $('cases-hint').replaceChildren();
+  if (!body.reportsAvailable) $('cases-hint').append(h('div', { class: 'hint', text: body.hint || 'reports missing' }));
+  const rows = $('cases-rows');
+  rows.replaceChildren();
+  for (const c of casesCache) {
+    const status = c.error ? h('span', { class: 'badge bad', text: 'unreadable' })
+      : c.final === true ? h('span', { class: 'badge good', text: 'FINAL' })
+      : c.escalated === true ? h('span', { class: 'badge bad', text: 'ESCALATED' })
+      : h('span', { class: 'badge neutral', text: 'no verdict' });
+    const tr = h('tr', {},
+      h('td', {}, h('div', { text: c.title || c.slug }), h('div', { class: 'hash', text: c.slug })),
+      h('td', { text: c.caseType || '–' }),
+      h('td', { text: c.tier || '–' }),
+      h('td', { text: c.valueUsd != null ? '$' + c.valueUsd : '–' }),
+      h('td', {}, h('code', { text: c.ruling ? (c.ruling.kind || JSON.stringify(c.ruling)) : '–' })),
+      h('td', {}, status),
+      h('td', { text: (c.injectionFlags || []).length + '' }),
+      h('td', { text: c.agreed === undefined ? '–' : c.agreed ? '✓' : '✗' }));
+    tr.addEventListener('click', () => showCase(c.slug));
+    rows.append(tr);
+  }
+}
+function kv(pairs) {
+  const dl = h('dl', { class: 'kv' });
+  for (const [k, v] of pairs) {
+    dl.append(h('dt', { text: k }), h('dd', {}, typeof v === 'string' ? v : v));
+  }
+  return dl;
+}
+async function showCase(slug) {
+  const { ok, body } = await api('/api/cases/' + encodeURIComponent(slug));
+  const panel = $('case-detail');
+  const box = $('cd-body');
+  panel.hidden = false;
+  box.replaceChildren();
+  if (!ok) { box.append(h('div', { class: 'err', text: 'case not found' })); return; }
+  const gt = body.groundTruth || {};
+  $('cd-title').textContent = (gt.title || slug) + ' — ' + body.case.caseId;
+  const v = body.verdict;
+  box.append(kv([
+    ['type / tier', body.case.caseType + ' / ' + body.case.tier + ' ($' + body.case.valueUsd + ')'],
+    ['decision space', h('code', { text: JSON.stringify(body.case.decisionSpace) })],
+    ['legal profile', h('code', { text: JSON.stringify(body.case.legalProfile) })],
+    ['expected (ground truth)', h('code', { text: JSON.stringify(gt.expected || null) })],
+  ]));
+  if (v) {
+    box.append(h('h2', { text: 'Verdict' }), kv([
+      ['ruling', h('code', { text: JSON.stringify(v.ruling) })],
+      ['status', v.final ? h('span', { class: 'badge good', text: 'FINAL' }) : h('span', { class: 'badge bad', text: 'ESCALATED' })],
+      ['majority', v.quality.majority],
+      ['swap-flip rate', String(v.quality.swapFlipRate)],
+      ['escalated', String(v.quality.escalated) + (v.quality.escalationReason ? ' (' + v.quality.escalationReason + ')' : '')],
+      ['injection flags', v.quality.injectionFlags.length ? v.quality.injectionFlags.join(', ') : 'none'],
+    ]));
+  } else {
+    box.append(h('div', { class: 'hint', text: body.hint || 'No stored verdict for this case yet.' }));
+  }
+  if (gt.rationale) box.append(h('h2', { text: 'Ground-truth rationale' }), h('p', { text: gt.rationale }));
+  if (body.instructionBlocks && body.instructionBlocks.length) {
+    const ol = h('ol', { class: 'instr' });
+    for (const b of body.instructionBlocks) ol.append(h('li', { text: b }));
+    box.append(h('details', {}, h('summary', { text: 'Tribunal instruction blocks (' + body.instructionBlocks.length + ')' }), ol));
+  }
+  if (body.reasoning) {
+    box.append(h('details', {}, h('summary', { text: 'Structured reasoning document' }),
+      h('pre', { text: JSON.stringify(body.reasoning, null, 2) })));
+  }
+  panel.scrollIntoView({ behavior: 'smooth' });
+}
+
+// --- sandbox --------------------------------------------------------------------------
+async function loadSandboxOptions() {
+  if (casesCache.length === 0) {
+    const { body } = await api('/api/cases');
+    casesCache = body.cases || [];
+  }
+  const source = $('sb-source');
+  const keep = source.value;
+  source.replaceChildren(h('option', { value: '__draft__', text: "Policy editor's current draft" }));
+  for (const c of casesCache) {
+    if (c.error) continue;
+    source.append(h('option', { value: c.slug, text: c.slug + (c.title ? ' — ' + c.title : '') }));
+  }
+  if ([...source.options].some((o) => o.value === keep)) source.value = keep;
+  const prof = $('sb-profile');
+  const keepP = prof.value;
+  prof.replaceChildren(h('option', { value: 'default', text: 'default (sandbox)' }));
+  const { body } = await api('/api/profiles');
+  for (const p of body.profiles || []) {
+    prof.append(h('option', { value: p.name + '@' + p.version, text: p.name + '@' + p.version }));
+  }
+  if ([...prof.options].some((o) => o.value === keepP)) prof.value = keepP;
+  $('sb-draft-evidence').hidden = source.value !== '__draft__';
+}
+$('sb-source').addEventListener('change', () => {
+  $('sb-draft-evidence').hidden = $('sb-source').value !== '__draft__';
+});
+$('sb-run').addEventListener('click', async () => {
+  const btn = $('sb-run');
+  const status = $('sb-status');
+  btn.disabled = true;
+  status.textContent = 'adjudicating…';
+  const req = { profileRef: $('sb-profile').value, by: $('sb-by').value };
+  if ($('sb-source').value === '__draft__') {
+    req.mandateDraft = collectDraft();
+    const evidence = { submissions: {} };
+    if ($('sb-sub-req').value.trim()) evidence.submissions.requester = $('sb-sub-req').value;
+    if ($('sb-sub-work').value.trim()) evidence.submissions.worker = $('sb-sub-work').value;
+    const sha = $('sb-art-sha').value.trim();
+    if (sha) {
+      evidence.deliver = { artifactHashes: [{ path: $('sb-art-path').value.trim() || 'artifact',
+        sha256: sha, mediaType: $('sb-art-media').value.trim() || 'application/octet-stream' }] };
+    }
+    req.evidence = evidence;
+  } else {
+    req.caseTemplate = $('sb-source').value;
+  }
+  const { ok, status: code, body } = await post('/api/sandbox/run', req);
+  btn.disabled = false;
+  status.textContent = '';
+  renderRun(ok, code, body);
+  loadReviewQueue(); // a queued disposition lands in the review panel
+});
+function money(x) { return x == null ? '–' : '$' + Number(x).toLocaleString(undefined, { maximumFractionDigits: 6 }); }
+function renderRun(ok, code, body) {
+  const panel = $('sb-result');
+  const box = $('sb-result-body');
+  panel.hidden = false;
+  box.replaceChildren();
+  if (code === 422 && body.lintBlocked) {
+    box.append(h('div', { class: 'err', text: 'Lint gate blocked protect():\n' + (body.reasons || []).join('\n') }));
+    const list = h('ul', { class: 'findings' });
+    for (const f of (body.report && body.report.findings) || []) {
+      list.append(h('li', {}, h('span', { class: 'sev ' + f.severity, text: f.severity }),
+        h('code', { text: f.code }), ' ' + f.message));
+    }
+    box.append(list);
+    return;
+  }
+  if (!ok) {
+    box.append(h('div', { class: 'err', text: (body.message || 'run failed') + '\n' + (body.problems || []).join('\n') }));
+    return;
+  }
+  const v = body.verdict;
+  const pairs = [
+    ['profile', body.profile.ref + ' '], ['profile hash', h('span', { class: 'hash', text: body.profile.profileHash })],
+    ['mandate hash', h('span', { class: 'hash', text: body.mandateHash })],
+    ['lint score', String(body.lint.score)],
+    ['ruling', h('code', { text: JSON.stringify(v.ruling) })],
+    ['status', v.final ? h('span', { class: 'badge good', text: 'FINAL' }) : h('span', { class: 'badge bad', text: 'ESCALATED' })],
+    ['majority / swap-flip', v.quality.majority + ' / ' + v.quality.swapFlipRate],
+    ['injection flags', v.quality.injectionFlags.length ? v.quality.injectionFlags.join(', ') : 'none'],
+  ];
+  if (body.disposition) {
+    pairs.push(['disposition', dispositionBadge(body.disposition)]);
+  }
+  if (body.reviewState) {
+    pairs.push(['review state', h('span', { class: 'badge warn', text: body.reviewState })]);
+  }
+  box.append(kv(pairs));
+  if (body.settlementNote) box.append(h('div', { class: 'hint', text: body.settlementNote }));
+  if (body.settlement) {
+    const s = body.settlement;
+    box.append(h('h2', { text: 'Settlement math' }), kv([
+      ['requester payout', money(s.requesterPayoutUsd)],
+      ['worker payout', money(s.workerPayoutUsd)],
+      ['bond refund', money(s.bondRefundUsd)],
+      ['bond burned', money(s.bondBurnedUsd)],
+      ['bond to counterparty', money(s.bondToCounterpartyUsd)],
+      ['ledger burn total', money(body.burnedTotalUsd)],
+    ]));
+    const bal = h('dl', { class: 'kv' });
+    for (const [agent, usd] of Object.entries(body.balances || {})) {
+      bal.append(h('dt', { text: agent }), h('dd', { text: money(usd) + ' (deposited ' + money((body.deposits || {})[agent]) + ')' }));
+    }
+    box.append(h('h2', { text: 'Final balances' }), bal);
+  }
+  if (body.frames && body.frames.instructionBlocks) {
+    const ol = h('ol', { class: 'instr' });
+    for (const b of body.frames.instructionBlocks) ol.append(h('li', { text: b }));
+    box.append(h('details', {}, h('summary', { text: 'Tribunal instruction blocks (' + body.frames.instructionBlocks.length + ')' }), ol));
+  }
+  if (body.reasoning) {
+    box.append(h('details', {}, h('summary', { text: 'Structured reasoning document' }),
+      h('pre', { text: JSON.stringify(body.reasoning, null, 2) })));
+  }
+  panel.scrollIntoView({ behavior: 'smooth' });
+}
+
+// --- review queue ----------------------------------------------------------------------
+function dispositionBadge(d) {
+  const cls = d.route === 'human_review' ? 'warn' : d.route === 'programmatic_fallback' ? 'neutral'
+    : d.route === 'appealable' ? 'neutral' : 'good';
+  const label = d.route + (d.trigger ? ' · ' + d.trigger : '') + ' (' + d.mode + ')';
+  return h('span', { class: 'badge ' + cls, text: label });
+}
+// The ruling picker is CONSTRAINED to the case's pre-committed decision
+// space: the bench selects within it only (same verdict-oracle invariant as
+// the AI jury).
+function rulingPicker(space) {
+  const wrap = h('div', { class: 'row' });
+  let collect;
+  if (space.kind === 'escrow_branches') {
+    const sel = h('select', {});
+    for (const k of space.permitted) sel.append(h('option', { value: k, text: k }));
+    const bps = h('input', { type: 'number', min: '0', max: '10000', value: '5000', title: 'requesterBps' });
+    const deadline = h('input', { type: 'number', placeholder: 'newDeadlineUnixMs', title: 'newDeadlineUnixMs' });
+    const sync = () => {
+      bps.hidden = sel.value !== 'split';
+      deadline.hidden = sel.value !== 'redo';
+    };
+    sel.addEventListener('change', sync);
+    sync();
+    wrap.append(h('label', { class: 'f' }, 'Ruling ', sel), bps, deadline);
+    collect = () => {
+      if (sel.value === 'split') return { kind: 'split', requesterBps: Number(bps.value) };
+      if (sel.value === 'redo') return { kind: 'redo', newDeadlineUnixMs: Number(deadline.value) };
+      return { kind: sel.value };
+    };
+  } else if (space.kind === 'categorical') {
+    const sel = h('select', {});
+    for (const o of space.outcomes) sel.append(h('option', { value: o, text: o }));
+    wrap.append(h('label', { class: 'f' }, 'Outcome ', sel));
+    collect = () => ({ kind: 'categorical', outcome: sel.value });
+  } else {
+    const value = h('input', { type: 'number', min: String(space.min), max: String(space.max), value: String(space.min) });
+    wrap.append(h('label', { class: 'f' }, 'Quantum (' + space.min + '–' + space.max + ' ' + space.unit + ') ', value));
+    collect = () => ({ kind: 'scalar', value: Number(value.value) });
+  }
+  return { node: wrap, collect };
+}
+async function loadReviewQueue() {
+  const { body } = await api('/api/sandbox/reviews');
+  const list = $('rq-list');
+  list.replaceChildren();
+  const entries = (body.reviews || []).filter((r) => r.reviewState === 'queued' || r.reviewState === 'appealed');
+  const resolved = (body.reviews || []).filter((r) => r.reviewState === 'resolved');
+  if (entries.length === 0) {
+    list.append(h('span', { class: 'muted', text: resolved.length
+      ? 'No cases awaiting review (' + resolved.length + ' resolved this session).'
+      : 'No sandbox cases are awaiting review.' }));
+    return;
+  }
+  for (const r of entries) {
+    const item = h('div', { class: 'panel', style: 'margin-bottom:.6rem' });
+    item.append(kv([
+      ['case', h('span', { class: 'hash', text: r.caseId })],
+      ['source / profile', (r.source && (r.source.slug || r.source.kind) || '–') + ' / ' + (r.profile ? r.profile.ref : '–')],
+      ['tier / value', (r.tier || '–') + ' / $' + (r.valueUsd != null ? r.valueUsd : '–')],
+      ['disposition', r.disposition ? dispositionBadge(r.disposition) : '–'],
+      ['review state', h('span', { class: 'badge warn', text: r.reviewState })],
+      ['AI ruling (advisory)', h('code', { text: JSON.stringify(r.ruling) })],
+      ...(r.escalationReason ? [['escalation reason', r.escalationReason]] : []),
+    ]));
+    const picker = rulingPicker(r.decisionSpace);
+    const reviewer = h('input', { placeholder: 'reviewerRef, e.g. bench:alice', value: '' });
+    const btn = h('button', { class: 'primary', text: 'Resolve as human reviewer' });
+    const status = h('span', { class: 'muted' });
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      status.textContent = 'resolving…';
+      const { ok, status: code, body: res } = await post('/api/sandbox/review', {
+        caseRef: r.caseId, ruling: picker.collect(), reviewerRef: reviewer.value.trim(),
+      });
+      btn.disabled = false;
+      status.textContent = '';
+      if (!ok) {
+        status.className = 'err';
+        status.textContent = (res.message || 'resolve failed (' + code + ')') +
+          (res.problems ? '\n' + res.problems.join('\n') : '');
+        return;
+      }
+      renderReviewResolution(res);
+      loadReviewQueue();
+    });
+    item.append(picker.node,
+      h('div', { class: 'row' }, h('label', { class: 'f', style: 'min-width:16rem' }, 'Reviewer ', reviewer), btn, status));
+    list.append(item);
+  }
+}
+function renderReviewResolution(body) {
+  const panel = $('sb-result');
+  const box = $('sb-result-body');
+  panel.hidden = false;
+  box.replaceChildren();
+  const v = body.verdict;
+  box.append(h('div', { class: 'ok-note', text: 'Human review resolved — the human-reviewed verdict below is what settles.' }));
+  box.append(kv([
+    ['case', h('span', { class: 'hash', text: body.caseId })],
+    ['ruling', h('code', { text: JSON.stringify(v.ruling) })],
+    ['status', v.final ? h('span', { class: 'badge good', text: 'FINAL (human-reviewed)' }) : h('span', { class: 'badge bad', text: 'NOT FINAL' })],
+    ['reviewed by', v.humanReview ? v.humanReview.reviewerRef + ' · basis ' + v.humanReview.basis : '–'],
+    ['decided at', v.humanReview ? new Date(v.humanReview.decidedAtUnixMs).toLocaleString() : '–'],
+    ['injection flags (audit)', v.quality.injectionFlags.length ? v.quality.injectionFlags.join(', ') : 'none'],
+  ]));
+  if (body.settlementNote) box.append(h('div', { class: 'hint', text: body.settlementNote }));
+  if (body.settlement) {
+    const s = body.settlement;
+    box.append(h('h2', { text: 'Settlement math' }), kv([
+      ['requester payout', money(s.requesterPayoutUsd)],
+      ['worker payout', money(s.workerPayoutUsd)],
+      ['bond refund', money(s.bondRefundUsd)],
+      ['bond burned', money(s.bondBurnedUsd)],
+      ['bond to counterparty', money(s.bondToCounterpartyUsd)],
+      ['ledger burn total', money(body.burnedTotalUsd)],
+    ]));
+    const bal = h('dl', { class: 'kv' });
+    for (const [agent, usd] of Object.entries(body.balances || {})) {
+      bal.append(h('dt', { text: agent }), h('dd', { text: money(usd) }));
+    }
+    box.append(h('h2', { text: 'Final balances' }), bal);
+  }
+  panel.scrollIntoView({ behavior: 'smooth' });
+}
+
+// --- init ----------------------------------------------------------------------------
+(function init() {
+  const d = new Date(Date.now() + 7 * 86400000);
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  $('m-deadline').value = d.toISOString().slice(0, 16);
+  refreshVersions();
+  runLint();
+})();
+</script>
+</body>
+</html>

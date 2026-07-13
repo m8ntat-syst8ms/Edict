@@ -1,0 +1,66 @@
+{
+  "caseId": "d0c4e7a0-0013-4e01-8e01-000000000013",
+  "caseType": "public_resolution",
+  "publicity": "public",
+  "requester": {
+    "agentId": "near:veil-challenger-7c1.near"
+  },
+  "worker": {
+    "agentId": "near:auric-whale-0x91.near"
+  },
+  "orderMandateHash": "9d12f5a4244f4049779d4b6ccb88965aaec536016e892fc3f5786156c37ca35c",
+  "evidence": [
+    {
+      "kind": "order_mandate",
+      "sha256": "9d12f5a4244f4049779d4b6ccb88965aaec536016e892fc3f5786156c37ca35c",
+      "submitter": "venue",
+      "uri": "evidence/resolution_rules.json",
+      "authenticated": true
+    },
+    {
+      "kind": "zktls_proof",
+      "sha256": "997351f9fe64c8a2248ca92b61c1abf31ff9201a38f6e3aa89874feaa0a7706f",
+      "submitter": "third_party",
+      "uri": "evidence/registry_extract.json",
+      "authenticated": true
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "8f448a618bcc994a18487ac062a33d0aa54e7b2037dd9f903653d42fb40c9c22",
+      "submitter": "worker",
+      "uri": "evidence/proposer_statement.txt",
+      "authenticated": false
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "c43106775c65547441b87c462f8b1684bfa9ba10af5cf068409bf2f1530b01c2",
+      "submitter": "requester",
+      "uri": "evidence/challenger_statement.txt",
+      "authenticated": false
+    }
+  ],
+  "valueUsd": 16000,
+  "tier": "C",
+  "custodyMode": "M2_external_escrow",
+  "railRef": {
+    "rail": "public-prediction-market",
+    "marketId": "ufo-declassification-2025",
+    "proposalRef": "prop-2025-12-31-0042"
+  },
+  "legalProfile": {
+    "governingLaw": "new_york",
+    "seat": "new_york",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "openedAtUnixMs": 1767398400000,
+  "decisionSpace": {
+    "kind": "categorical",
+    "outcomes": [
+      "YES",
+      "NO",
+      "INVALID"
+    ],
+    "invalidOutcome": "INVALID"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "proofType": "zktls-session-v1",
+  "notary": "edict-notary-pool-3",
+  "submitterBondRef": "bond:public-prediction-market:0x5a91cc02",
+  "source": "https://www.federalregister.gov/api/v1/documents.json?conditions%5Bterm%5D=UAP+records+collection&conditions%5Bpublication_date%5D%5Blte%5D=2025-12-31",
+  "secondarySource": "https://catalog.archives.gov/api/v2/records?q=UAP%20records%20collection%20release&dateRange=..2025-12-31",
+  "fetchedAtUnixMs": 1767398400000,
+  "transcriptSha256": "8be24f7c1c1f5a5b4e0a4c7d92f36a1908d7be55c3f2a6b0e14d92c7a05e6631",
+  "responseExcerpt": {
+    "federalRegisterCount": 0,
+    "federalRegisterResults": [],
+    "nationalArchivesReleaseEntries": 0
+  },
+  "resultSummary": "NO qualifying publication record exists on or before 2025-12-31: the Federal Register query returns zero documents for the UAP records collection, and the National Archives release index returns zero entries for the same period. Supported resolution on this evidence: NO.",
+  "supportedResolution": "NO"
+}

@@ -1,0 +1,80 @@
+{
+  "caseId": "d0c4e7a0-0001-4e01-8e01-000000000001",
+  "caseType": "bilateral",
+  "publicity": "sealed",
+  "requester": {
+    "agentId": "near:polaris-briefs.near",
+    "principalKybRef": "kyb:v0:polaris-media-ltd"
+  },
+  "worker": {
+    "agentId": "near:factline-research.near",
+    "principalKybRef": "kyb:v0:factline-labs-inc"
+  },
+  "orderMandateHash": "3e6c3932f2d3a9bd05fcb20304f876560baef168cbb8cb49cb0fe3152e03618d",
+  "deliveryManifestHash": "39de0130a673b5880cb255010280d9da59abc57b7e8746d021c4cf4ec37a3e3b",
+  "evidence": [
+    {
+      "kind": "order_mandate",
+      "sha256": "3e6c3932f2d3a9bd05fcb20304f876560baef168cbb8cb49cb0fe3152e03618d",
+      "submitter": "system",
+      "uri": "evidence/order_mandate.json",
+      "authenticated": true
+    },
+    {
+      "kind": "delivery_manifest",
+      "sha256": "39de0130a673b5880cb255010280d9da59abc57b7e8746d021c4cf4ec37a3e3b",
+      "submitter": "worker",
+      "uri": "evidence/delivery_manifest.json",
+      "authenticated": true
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "4f1046111ed4add532b16a17f867f1489483a8b8467881188ff534151c20305b",
+      "submitter": "worker",
+      "uri": "evidence/delivered_report.md",
+      "authenticated": false
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "2ca8bcf8a1e7bbe4d11b91ba3586b8135a0239d10bca88be5ac0efb0d9c0992d",
+      "submitter": "requester",
+      "uri": "evidence/requester_pleading.txt",
+      "authenticated": false
+    },
+    {
+      "kind": "party_submission",
+      "sha256": "95ea759c18d856c52b3d3309bd9625ac500c74b2f3156c3ee47c564bd56f9fc1",
+      "submitter": "worker",
+      "uri": "evidence/worker_pleading.txt",
+      "authenticated": false
+    },
+    {
+      "kind": "interaction_log_head",
+      "sha256": "4c3d83a7b223019c8b7b7943ac6776aac1739fc3f77fd4648dfb92903cf46197",
+      "submitter": "venue",
+      "uri": "evidence/interaction_log.txt",
+      "authenticated": true
+    }
+  ],
+  "valueUsd": 45000,
+  "tier": "C",
+  "custodyMode": "M2_external_escrow",
+  "railRef": {
+    "rail": "near-agent-market",
+    "jobId": "job-2026-0491"
+  },
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "openedAtUnixMs": 1778630400000,
+  "decisionSpace": {
+    "kind": "escrow_branches",
+    "permitted": [
+      "requester_wins",
+      "worker_wins"
+    ]
+  }
+}

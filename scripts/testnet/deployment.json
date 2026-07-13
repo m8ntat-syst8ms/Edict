@@ -1,0 +1,38 @@
+{
+  "version": "edict-native-testnet-1",
+  "generatedAt": "2026-07-12T15:13:55.103Z",
+  "network": "testnet",
+  "deploymentSuffix": "ggrb91",
+  "warning": "Unaudited NEAR Testnet deployment with simulated signer operators. Do not use customer funds.",
+  "accounts": {
+    "publisher": "edict-req-ggrb91.testnet",
+    "customerGovernance": "edict-req-ggrb91.testnet",
+    "worker": "edict-wrk-ggrb91.testnet",
+    "removal": "cfe1355f332ae784c34546a05fc3ba0e416efcf4f8541be449d2f3b57c88cfdc",
+    "factory": "m2.edict-req-ggrb91.testnet",
+    "settlement": "protect.m2.edict-req-ggrb91.testnet"
+  },
+  "artifacts": {
+    "settlementSha256Hex": "405b159989f24a1afdd9b01c58c77b5c0d501f947aa17296881ede49bbda8852",
+    "settlementCodeHashBase58": "5LDebLg7SS6Z4ePmH4TACjjM9cKvAvwqfxfsSsZXKstD",
+    "factorySha256Hex": "561b715958cadcc8fbc22bc0e922667b93ef34ce78584a68914ab45952f36f79",
+    "factoryCodeHashBase58": "6o8LHdz1p9YexF69r2qqZ6wSp4VB278a8SpBBAt5rK52"
+  },
+  "transactions": {
+    "settlementPublish": "7P2gV8yJPLxG7WipPoNXNS1FggGPuEP82xWhLWiLwfwY",
+    "factoryPublish": null,
+    "factoryBootstrap": "rmgsGBbyn5XrGvrztdmjiQJnYuLjAu4xDtUdTvJf2ZA",
+    "instanceCreate": "F6hKaJwQ2fgz5DLNsRn4TSH2sHnJRKP474KMiSEDdym1"
+  },
+  "verification": {
+    "factoryAccessKeys": 0,
+    "settlementAccessKeys": 0,
+    "factoryAdminless": true,
+    "factoryDeploymentMode": "direct_code_on_keyless_account",
+    "deploymentStatus": "active",
+    "nativeNearOnly": true,
+    "verifierPolicySha256Hex": "8055618d9ade00b73480b80043e6222be95501e2ae92879c0d85c1857f7b6647",
+    "blockHeight": 258916185
+  },
+  "testnetSpendYocto": "58078279321272596400000000"
+}

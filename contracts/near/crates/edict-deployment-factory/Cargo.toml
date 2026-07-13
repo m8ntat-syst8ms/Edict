@@ -1,0 +1,17 @@
+[package]
+name = "edict-deployment-factory"
+description = "Adminless factory for keyless Edict customer settlement instances on NEAR"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+edict-settlement-common = { path = "../edict-settlement-common" }
+near-sdk = { workspace = true }
+
+[dev-dependencies]
+near-sdk = { workspace = true, features = ["unit-testing"] }

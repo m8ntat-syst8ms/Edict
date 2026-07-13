@@ -1,0 +1,68 @@
+{
+  "version": "edict-om-1",
+  "requester": {
+    "agentId": "near:relay-ops.near",
+    "principalKybRef": "kyb:v0:relay-ops-gmbh"
+  },
+  "worker": {
+    "agentId": "near:aegis-pool.near",
+    "principalKybRef": "kyb:v0:aegis-mutual-ltd"
+  },
+  "description": "AI-agent liability claim clm-2026-0042 under policy pol-2026-1188: the insured procurement agent double-submitted a purchase workflow on 2026-05-18 (covered incident CONCEDED by the pool). Disputed: quantum only. Payable loss components are those hash-committed as authenticated payment evidence under the criteria below; the policy's committed terms bound the award to the range [0, 50000] USD.",
+  "acceptanceCriteria": [
+    {
+      "id": "QC-1",
+      "statement": "Remediation invoice A — vendor rollback and duplicate purchase-order reversal, 15000 USD — is payable iff the invoice bytes are hash-committed as authenticated payment evidence.",
+      "machineCheck": {
+        "kind": "hash_equals",
+        "params": {
+          "expectedSha256": "9b22a2f247fdda6d8096e5065e107009e0ccceaa5bb6718730add173723f360a",
+          "payableUsd": 15000
+        }
+      }
+    },
+    {
+      "id": "QC-2",
+      "statement": "Remediation invoice B — emergency inventory-data reconciliation and post-incident audit, 15000 USD — is payable iff the invoice bytes are hash-committed as authenticated payment evidence.",
+      "machineCheck": {
+        "kind": "hash_equals",
+        "params": {
+          "expectedSha256": "70b5d7cf33490c007dbaa56987a66eba449a48dab67ad98724a0b7c8afec9fb6",
+          "payableUsd": 15000
+        }
+      }
+    },
+    {
+      "id": "QC-3",
+      "statement": "Consequential and indirect losses — lost margin, goodwill, projected revenue — are excluded under committed policy clause 7.2 and are not payable regardless of proof.",
+      "machineCheck": {
+        "kind": "custom",
+        "params": {
+          "clause": "7.2",
+          "payableUsd": 0
+        }
+      }
+    }
+  ],
+  "priceUsd": 50000,
+  "currency": {
+    "asset": "USDC",
+    "rail": "aegis-claims"
+  },
+  "deadlineUnixMs": 1782259200000,
+  "acceptanceWindowMs": 172800000,
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "decisionSpace": {
+    "kind": "bounded_scalar",
+    "min": 0,
+    "max": 50000,
+    "unit": "USD"
+  },
+  "maeEvents": [],
+  "nonce": "om-c14-5b8c02"
+}

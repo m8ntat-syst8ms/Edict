@@ -1,0 +1,28 @@
+{
+  "name": "@edict/console",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Local Edict policy, case inspection, and sandbox dispute console",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "edict-console": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "static"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\"",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@edict/arbiter": "*",
+    "@edict/core": "*",
+    "@edict/evidence": "*",
+    "@edict/linter": "*",
+    "@edict/sdk": "*"
+  }
+}

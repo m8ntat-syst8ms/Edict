@@ -1,0 +1,26 @@
+{
+  "name": "@edict/protect-app",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Edict Protect customer workspace: runtime Activity, Needs attention and one-time setup, plus an explicit SDK sandbox",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "edict-protect": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "static"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\"",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@edict/core": "*",
+    "@edict/evidence": "*",
+    "@edict/sdk": "*"
+  }
+}

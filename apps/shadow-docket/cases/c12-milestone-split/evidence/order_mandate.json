@@ -1,0 +1,87 @@
+{
+  "version": "edict-om-1",
+  "requester": {
+    "agentId": "near:coursecraft.near",
+    "principalKybRef": "kyb:v0:coursecraft-ab"
+  },
+  "worker": {
+    "agentId": "near:lessonwright.near",
+    "principalKybRef": "kyb:v0:lessonwright-ltd",
+    "erc8004Ref": "eip155:1/0x8004fAce/7719"
+  },
+  "description": "Produce four course modules (M1–M4) for the CourseCraft agent-engineering curriculum. Modules are separately priced at 25% of the escrow each; acceptance per module is by checksum of the frozen outline+script package.",
+  "acceptanceCriteria": [
+    {
+      "id": "AC-1",
+      "statement": "Module 1 package hash-matches the frozen fixture.",
+      "machineCheck": {
+        "kind": "hash_equals",
+        "params": {
+          "expectedSha256": "f71ed12ab9d433963b46d502d0557fccee7dd6162df1374d4403c43d31ee7b2e",
+          "artifactName": "module-1.pkg"
+        }
+      }
+    },
+    {
+      "id": "AC-2",
+      "statement": "Module 2 package hash-matches the frozen fixture.",
+      "machineCheck": {
+        "kind": "hash_equals",
+        "params": {
+          "expectedSha256": "f008cc1dddbe649f0faa7d7d597406523336521279589b8a3b47e0cc015060e2",
+          "artifactName": "module-2.pkg"
+        }
+      }
+    },
+    {
+      "id": "AC-3",
+      "statement": "Module 3 package hash-matches the frozen fixture.",
+      "machineCheck": {
+        "kind": "hash_equals",
+        "params": {
+          "expectedSha256": "f1b0c3ad8b54c5e5329371a3aa5b6117ee387c807af28987652c85252ecc455e",
+          "artifactName": "module-3.pkg"
+        }
+      }
+    },
+    {
+      "id": "AC-4",
+      "statement": "Module 4 package hash-matches the frozen fixture.",
+      "machineCheck": {
+        "kind": "hash_equals",
+        "params": {
+          "expectedSha256": "00ed5c42738a6a52b792a12b078491a1b5b5259b681bbc1ceb4de190bae9b59e",
+          "artifactName": "module-4.pkg"
+        }
+      }
+    },
+    {
+      "id": "AC-5",
+      "statement": "All modules delivered before the mandate deadline.",
+      "machineCheck": {
+        "kind": "deadline_before",
+        "params": {}
+      }
+    }
+  ],
+  "priceUsd": 6000,
+  "currency": {
+    "asset": "USDC",
+    "rail": "near-agent-market"
+  },
+  "deadlineUnixMs": 1779062400000,
+  "acceptanceWindowMs": 172800000,
+  "legalProfile": {
+    "governingLaw": "england_wales",
+    "seat": "london",
+    "rules": "edict-drr-v0.1",
+    "enforcementTier": "E1"
+  },
+  "permittedRulings": [
+    "requester_wins",
+    "worker_wins",
+    "split"
+  ],
+  "maeEvents": [],
+  "nonce": "om-c12-3d66b8"
+}

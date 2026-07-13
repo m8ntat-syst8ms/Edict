@@ -1,0 +1,23 @@
+{
+  "name": "@edict/sdk",
+  "version": "0.0.1",
+  "description": "Edict developer SDK: seven-line wallet-native payment protection, with optional enterprise legal assurance",
+  "type": "module",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\""
+  },
+  "dependencies": {
+    "@edict/core": "*",
+    "@edict/evidence": "*",
+    "@edict/arbiter": "*",
+    "@edict/linter": "*",
+    "@edict/near-deployer": "*",
+    "@edict/near-intents": "*"
+  }
+}

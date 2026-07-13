@@ -1,0 +1,1 @@
+Manifest: 10 artifacts, format=pdf, artifactRoot=deadbeef, signedBy=worker.

@@ -1,0 +1,19 @@
+{
+  "name": "@edict/dstack-node",
+  "version": "0.0.1",
+  "description": "Self-hosted attested inference proxy for the Edict arbiter",
+  "type": "module",
+  "main": "dist/server.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "npm run build --silent && node --test \"dist/**/*.test.js\"",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@noble/curves": "^2.2.0",
+    "@noble/hashes": "^2.2.0"
+  }
+}
