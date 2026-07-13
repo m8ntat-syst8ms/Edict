@@ -15,4 +15,4 @@ near-sdk = { workspace = true, features = ["unstable"] }
 
 [dev-dependencies]
 near-sdk = { workspace = true, features = ["unit-testing", "unstable"] }
-k256 = { version = "0.13", features = ["ecdsa"] }
+k256 = { version = "0.14", features = ["ecdsa"] }
