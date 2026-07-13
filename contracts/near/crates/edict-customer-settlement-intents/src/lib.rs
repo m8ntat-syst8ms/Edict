@@ -937,7 +937,7 @@ mod tests {
         let mut bytes = [0u8; 32];
         bytes[31] = seed;
         let signing_key = SigningKey::from_bytes(&bytes.into()).expect("valid signing key");
-        let public_key = signing_key.verifying_key().to_encoded_point(false);
+        let public_key = signing_key.verifying_key().to_sec1_point(false);
         let hash = env::keccak256_array(&public_key.as_bytes()[1..]);
         Juror {
             signing_key,
@@ -1066,17 +1066,14 @@ mod tests {
     }
 
     fn sign(juror: &Juror, message: &[u8; 32]) -> VerdictSignature {
-        let (signature, recovery_id) = juror
-            .signing_key
-            .sign_prehash_recoverable(message)
-            .expect("signing succeeds");
-        let (signature, recovery_id) = match signature.normalize_s() {
-            Some(normalized) => (
-                normalized,
-                RecoveryId::new(!recovery_id.is_y_odd(), recovery_id.is_x_reduced()),
-            ),
-            None => (signature, recovery_id),
+        let (signature, recovery_id) = juror.signing_key.sign_prehash_recoverable(message);
+        let normalized = signature.normalize_s();
+        let recovery_id = if normalized != signature {
+            RecoveryId::new(!recovery_id.is_y_odd(), recovery_id.is_x_reduced())
+        } else {
+            recovery_id
         };
+        let signature = normalized;
         let mut bytes = signature.to_bytes().to_vec();
         bytes.push(recovery_id.to_byte());
         VerdictSignature {
