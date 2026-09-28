@@ -13,7 +13,7 @@
     "test": "npm run build --silent && node --test \"dist/**/*.test.js\""
   },
   "dependencies": {
-    "@defuse-protocol/one-click-sdk-typescript": "^0.1.25",
+    "@defuse-protocol/one-click-sdk-typescript": "^0.1.26",
     "@edict/core": "*"
   },
   "devDependencies": {
